@@ -5,7 +5,7 @@ import org.usfirst.frc.team3473.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ *	A subsystem that represents the robot's drivetrain.
  */
 public class Drivetrain extends Subsystem {
 

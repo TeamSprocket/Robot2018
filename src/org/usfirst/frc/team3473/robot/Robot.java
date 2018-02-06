@@ -10,9 +10,11 @@ package org.usfirst.frc.team3473.robot;
 import org.usfirst.frc.team3473.robot.commands.Drive;
 import org.usfirst.frc.team3473.robot.commands.DriveDistance;
 import org.usfirst.frc.team3473.robot.commands.Elevate;
+import org.usfirst.frc.team3473.robot.commands.MoveRollers;
 import org.usfirst.frc.team3473.robot.commands.TurnAngle;
 import org.usfirst.frc.team3473.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3473.robot.subsystems.Elevator;
+import org.usfirst.frc.team3473.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -32,6 +34,7 @@ public class Robot extends TimedRobot {
 	
 	public static Drivetrain drivetrain = new Drivetrain();
 	public static Elevator elevator = new Elevator();
+	public static Intake intake = new Intake();
 	
 	private CommandGroup autonomous;
 
@@ -89,9 +92,9 @@ public class Robot extends TimedRobot {
 				SmartDashboard.putString("Turn", "Right");
 			}
 			autonomous.addSequential(new DriveDistance(500));
-			autonomous.addSequential(new Elevate(true));
+			autonomous.addSequential(new MoveRollers(1));
 			autonomous.addSequential(new TimedCommand(3.0));
-			autonomous.addSequential(new Elevate(false));
+			autonomous.addSequential(new MoveRollers(-1));
 		}
 		autonomous.start();
 	}
@@ -112,8 +115,15 @@ public class Robot extends TimedRobot {
 		Drive drive = new Drive();
 		drive.start();
 		
-		OI.elevateButton.whenPressed(new Elevate(true));
-		OI.elevateButton.whenReleased(new Elevate(false));
+		OI.intakeButton.whenPressed(new MoveRollers(1));
+		OI.intakeButton.whenReleased(new MoveRollers(0));
+		OI.outtakeButton.whenPressed(new MoveRollers(-1));
+		OI.outtakeButton.whenReleased(new MoveRollers(0));
+		
+		OI.lowerElevatorButton.whenPressed(new Elevate(1));
+		OI.lowerElevatorButton.whenReleased(new Elevate(0));
+		OI.raiseElevatorButton.whenPressed(new Elevate(-1));
+		OI.raiseElevatorButton.whenReleased(new Elevate(0));
 	}
 
 	/**

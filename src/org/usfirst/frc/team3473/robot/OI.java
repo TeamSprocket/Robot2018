@@ -47,5 +47,8 @@ public class OI {
 	public static Joystick leftJoystick = new Joystick(0);
 	public static Joystick rightJoystick = new Joystick(1);
 	
-	public static Button elevateButton = new JoystickButton(leftJoystick, 1);
+	public static Button intakeButton = new JoystickButton(leftJoystick, 1);
+	public static Button outtakeButton = new JoystickButton(rightJoystick, 1);
+	public static Button raiseElevatorButton = new JoystickButton(leftJoystick, 3);
+	public static Button lowerElevatorButton = new JoystickButton(leftJoystick, 4);
 }

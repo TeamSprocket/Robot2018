@@ -8,23 +8,33 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class Elevate extends Command {
-	private boolean raiseElevator; // true = raise, false = lower
-
+	private static final double DEFAULT_SPEED = 0.4;
+	
+	private double elevatorSpeed;
+	
 	/**
-	 * Creates a new Elevate command.
-	 * @param raiseElevator Set this to true to raise the elevator, false to lower the elevator.
+	 * Creates a new Elevate command, which moves the elevator at a default speed.
+	 * @param raiseElevator Set this to 1 to raise the elevator, -1 to lower the elevator,
+	 * and 0 to stop the elevator.
 	 */
-    public Elevate(boolean raiseElevator) {
-        requires(Robot.elevator);
-        this.raiseElevator = raiseElevator;
+    public Elevate(int raiseElevator) {
+        this(raiseElevator * DEFAULT_SPEED);
+    }
+    
+    /**
+     * Creates a new Elevate command that moves the elevator at a given speed.
+     * @param elevatorSpeed The speed at which to move the elevator (positive values
+     * indicate the elevator is moving up, negative values indicate the elevator is
+     * moving down)
+     */
+    public Elevate(double elevatorSpeed) {
+    	requires(Robot.elevator);
+    	this.elevatorSpeed = elevatorSpeed;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(raiseElevator)
-    		Robot.elevator.elevate();
-    	else
-    		Robot.elevator.lower();
+    	Robot.elevator.moveElevator(elevatorSpeed);
     }
 
     // Called repeatedly when this Command is scheduled to run
