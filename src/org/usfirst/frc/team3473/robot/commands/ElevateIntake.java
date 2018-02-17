@@ -6,14 +6,13 @@ import org.usfirst.frc.team3473.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *	The default command for driving the robot using joysticks.
+ * Raises or lowers the intake elevator according to joystick values. This is
+ * the default ElevateIntake command used in teleop.
  */
-public class Drive extends Command {
+public class ElevateIntake extends Command {
 
-	public Drive() {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
-		requires(Robot.drivetrain);
+	public ElevateIntake() {
+		requires(Robot.intakeElevator);
 	}
 
 	// Called just before this Command runs the first time
@@ -22,13 +21,10 @@ public class Drive extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double speed = -OI.leftJoystick.getY();
-		double turn = OI.rightJoystick.getX();
-
-		if(Math.abs(speed) < 0.1) speed = 0.0;
-		if(Math.abs(turn) < 0.1) turn = 0.0;
-
-		Robot.drivetrain.arcadeDrive(speed, turn);
+		double speed = OI.gamepad.getY(OI.intakeHand);
+		if(Math.abs(speed) < 0.1)
+			speed = 0.0;
+		Robot.intakeElevator.moveElevator(speed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

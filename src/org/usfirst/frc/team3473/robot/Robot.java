@@ -7,20 +7,18 @@
 
 package org.usfirst.frc.team3473.robot;
 
-import org.usfirst.frc.team3473.robot.commands.Drive;
-import org.usfirst.frc.team3473.robot.commands.DriveDistance;
-import org.usfirst.frc.team3473.robot.commands.Elevate;
+import org.usfirst.frc.team3473.robot.commands.ActuateIntake;
 import org.usfirst.frc.team3473.robot.commands.MoveRollers;
-import org.usfirst.frc.team3473.robot.commands.TurnAngle;
+import org.usfirst.frc.team3473.robot.subsystems.ClimbElevator;
 import org.usfirst.frc.team3473.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team3473.robot.subsystems.Elevator;
 import org.usfirst.frc.team3473.robot.subsystems.Intake;
+import org.usfirst.frc.team3473.robot.subsystems.IntakeActuation;
+import org.usfirst.frc.team3473.robot.subsystems.IntakeElevator;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.TimedCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -31,11 +29,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-	
+
 	public static Drivetrain drivetrain = new Drivetrain();
-	public static Elevator elevator = new Elevator();
 	public static Intake intake = new Intake();
-	
+	public static IntakeElevator intakeElevator = new IntakeElevator();
+	public static ClimbElevator climbElevator = new ClimbElevator();
+	public static IntakeActuation intakeActuation = new IntakeActuation();
+
 	private CommandGroup autonomous;
 
 	/**
@@ -44,8 +44,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		RobotMap.gyro.reset();
-		RobotMap.gyro.calibrate();
 	}
 
 	/**
@@ -79,22 +77,17 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		SmartDashboard.putString("Game Data", gameData);
-		
+
 		if(autonomous == null) {
 			autonomous = new CommandGroup();
-			autonomous.addSequential(new DriveDistance(500));
 			if(gameData.charAt(0) == 'L') {
-				autonomous.addSequential(new TurnAngle(-0.4, 90));
 				SmartDashboard.putString("Turn", "Left");
+				// Do something...
 			}
 			else if(gameData.charAt(0) == 'R') {
-				autonomous.addSequential(new TurnAngle(0.4, 90));
 				SmartDashboard.putString("Turn", "Right");
+				// Do something...
 			}
-			autonomous.addSequential(new DriveDistance(500));
-			autonomous.addSequential(new MoveRollers(1));
-			autonomous.addSequential(new TimedCommand(3.0));
-			autonomous.addSequential(new MoveRollers(-1));
 		}
 		autonomous.start();
 	}
@@ -111,19 +104,13 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		if(autonomous != null)
 			autonomous.cancel();
-		
-		Drive drive = new Drive();
-		drive.start();
-		
+
 		OI.intakeButton.whenPressed(new MoveRollers(1));
 		OI.intakeButton.whenReleased(new MoveRollers(0));
 		OI.outtakeButton.whenPressed(new MoveRollers(-1));
 		OI.outtakeButton.whenReleased(new MoveRollers(0));
-		
-		OI.lowerElevatorButton.whenPressed(new Elevate(1));
-		OI.lowerElevatorButton.whenReleased(new Elevate(0));
-		OI.raiseElevatorButton.whenPressed(new Elevate(-1));
-		OI.raiseElevatorButton.whenReleased(new Elevate(0));
+		OI.actuateButton.whenPressed(new ActuateIntake(true));
+		OI.actuateButton.whenReleased(new ActuateIntake(false));
 	}
 
 	/**
@@ -140,7 +127,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 	}
-	
+
 	public void updateDashboardValues() {
 		SmartDashboard.putNumber("Left Joystick X", OI.leftJoystick.getX());
 		SmartDashboard.putNumber("Left Joystick Y", OI.leftJoystick.getY());

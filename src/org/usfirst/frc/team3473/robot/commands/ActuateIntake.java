@@ -1,39 +1,34 @@
 package org.usfirst.frc.team3473.robot.commands;
 
-import org.usfirst.frc.team3473.robot.OI;
 import org.usfirst.frc.team3473.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *	The default command for driving the robot using joysticks.
+ *	A single-step command that actuates the intake piston once.
  */
-public class Drive extends Command {
+public class ActuateIntake extends Command {
+	private boolean actuate;
 
-	public Drive() {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
-		requires(Robot.drivetrain);
+	/**
+	 * Creates a new Actuate command.
+	 */
+	public ActuateIntake(boolean actuateOutwards) {
+		actuate = actuateOutwards;
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		Robot.intakeActuation.actuate(actuate);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double speed = -OI.leftJoystick.getY();
-		double turn = OI.rightJoystick.getX();
-
-		if(Math.abs(speed) < 0.1) speed = 0.0;
-		if(Math.abs(turn) < 0.1) turn = 0.0;
-
-		Robot.drivetrain.arcadeDrive(speed, turn);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	// Called once after isFinished returns true

@@ -9,10 +9,8 @@ package org.usfirst.frc.team3473.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.Solenoid;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -21,19 +19,20 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
  * floating around.
  */
 public class RobotMap {
-	public static WPI_TalonSRX frontLeft = new WPI_TalonSRX(5);
-	public static WPI_TalonSRX midLeft = new WPI_TalonSRX(6);
-	public static WPI_TalonSRX backLeft = new WPI_TalonSRX(8);
-	public static WPI_TalonSRX frontRight = new WPI_TalonSRX(1);
-	public static WPI_TalonSRX midRight = new WPI_TalonSRX(2);
-	public static WPI_TalonSRX backRight = new WPI_TalonSRX(7);
-	
-	public static WPI_TalonSRX climbLeft = new WPI_TalonSRX(3);
-	public static WPI_TalonSRX climbRight = new WPI_TalonSRX(4);
-	
-	public static DoubleSolenoid gate = new DoubleSolenoid(0, 1);
-	
-	public static Encoder encoder = new Encoder(2, 3);
-	
-	public static Gyro gyro = new ADXRS450_Gyro();
+	// Drivetrain
+	public static WPI_TalonSRX frontLeft = new WPI_TalonSRX(-1);
+	public static WPI_TalonSRX backLeft = new WPI_TalonSRX(-1);
+	public static WPI_TalonSRX frontRight = new WPI_TalonSRX(-1);
+	public static WPI_TalonSRX backRight = new WPI_TalonSRX(-1);
+	public static DoubleSolenoid gearPneumatics = new DoubleSolenoid(-1, -1);
+
+	// Intake
+	public static WPI_TalonSRX intakeElevator = new WPI_TalonSRX(-1);
+	public static WPI_TalonSRX intakeLeft = new WPI_TalonSRX(-1);
+	public static WPI_TalonSRX intakeRight = new WPI_TalonSRX(-1);
+	public static Solenoid actuationPiston = new Solenoid(-1);
+
+	// Climb
+	public static WPI_TalonSRX climbElevator1 = new WPI_TalonSRX(-1);
+	public static WPI_TalonSRX climbElevator2 = new WPI_TalonSRX(-1);
 }
