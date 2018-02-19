@@ -24,6 +24,7 @@ public class GearPneumatics extends Subsystem {
     public void movePneumaticsForward() {
     		RobotMap.gearPneumatics.set(DoubleSolenoid.Value.kForward);
     		toggled = true;
+    		
     }
     
     public void movePneumaticsBackward() {

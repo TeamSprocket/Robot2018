@@ -12,16 +12,18 @@ public class GearToggle extends Command {
     public GearToggle() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.gearPneumatics);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    		if(Robot.gearPneumatics.getToggled()) {
-    			Robot.gearPneumatics.movePneumaticsBackward();
-    		}
-    		else {
-    			Robot.gearPneumatics.movePneumaticsForward();
-    		}
+		if(Robot.gearPneumatics.getToggled()) {
+			Robot.gearPneumatics.movePneumaticsBackward();
+		}
+		else {
+			Robot.gearPneumatics.movePneumaticsForward();
+		}
+		
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -30,7 +32,7 @@ public class GearToggle extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

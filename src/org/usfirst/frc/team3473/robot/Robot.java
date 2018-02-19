@@ -109,7 +109,7 @@ public class Robot extends TimedRobot {
 		OI.outtakeButton.whenReleased(new MoveRollers(0));
 		OI.actuateButton.whenPressed(new ActuateIntake(true));
 		OI.actuateButton.whenReleased(new ActuateIntake(false));
-		OI.changeGearButton.whenReleased(new GearToggle());
+		OI.changeGearButton.whenPressed(new GearToggle());
 	}
 
 	/**
@@ -118,6 +118,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		updateDashboardValues();
 	}
 
 	/**
@@ -132,5 +133,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Left Joystick Y", OI.leftJoystick.getY());
 		SmartDashboard.putNumber("Right Joystick X", OI.rightJoystick.getX());
 		SmartDashboard.putNumber("Right Joystick Y", OI.rightJoystick.getY());
+		SmartDashboard.putBoolean("Gear Shifted", gearPneumatics.getToggled());
 	}
 }

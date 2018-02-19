@@ -22,7 +22,7 @@ public class Drive extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double speed = -OI.leftJoystick.getY();
+		double speed = -OI.leftJoystick.getY() * .8;
 		double turn = OI.rightJoystick.getX();
 
 		if(Math.abs(speed) < 0.1) speed = 0.0;
