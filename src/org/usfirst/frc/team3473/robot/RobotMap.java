@@ -9,8 +9,11 @@ package org.usfirst.frc.team3473.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -35,4 +38,9 @@ public class RobotMap {
 	// Climb
 	public static WPI_TalonSRX climbElevator1 = new WPI_TalonSRX(3);
 	public static WPI_TalonSRX climbElevator2 = new WPI_TalonSRX(8);
+	
+	// Sensors
+	public static Encoder leftEncoder = new Encoder(0, 1);
+	public static Encoder rightEncoder = new Encoder(2, 3);
+	public static Gyro gyro = new ADXRS450_Gyro();
 }

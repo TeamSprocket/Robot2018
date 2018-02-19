@@ -8,14 +8,22 @@
 package org.usfirst.frc.team3473.robot;
 
 import org.usfirst.frc.team3473.robot.commands.ActuateIntake;
+import org.usfirst.frc.team3473.robot.commands.Auton;
+import org.usfirst.frc.team3473.robot.commands.Auton.Position;
 import org.usfirst.frc.team3473.robot.commands.GearToggle;
 import org.usfirst.frc.team3473.robot.commands.MoveRollers;
-import org.usfirst.frc.team3473.robot.subsystems.*;
+import org.usfirst.frc.team3473.robot.subsystems.ClimbElevator;
+import org.usfirst.frc.team3473.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team3473.robot.subsystems.GearPneumatics;
+import org.usfirst.frc.team3473.robot.subsystems.Intake;
+import org.usfirst.frc.team3473.robot.subsystems.IntakeActuation;
+import org.usfirst.frc.team3473.robot.subsystems.IntakeElevator;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -34,7 +42,8 @@ public class Robot extends TimedRobot {
 	public static IntakeActuation intakeActuation = new IntakeActuation();
 	public static GearPneumatics gearPneumatics = new GearPneumatics();
 
-	private CommandGroup autonomous;
+	private Command autonomous;
+	private SendableChooser<Auton.Position> autoChooser;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -42,6 +51,13 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		RobotMap.gyro.calibrate();
+		
+		autoChooser = new SendableChooser<>();
+		autoChooser.addObject("Left", Position.LEFT);
+		autoChooser.addDefault("Center", Position.CENTER);
+		autoChooser.addDefault("Right", Position.RIGHT);
+		SmartDashboard.putData("Starting Position", autoChooser);
 	}
 
 	/**
@@ -76,17 +92,11 @@ public class Robot extends TimedRobot {
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		SmartDashboard.putString("Game Data", gameData);
 
-		if(autonomous == null) {
-			autonomous = new CommandGroup();
-			if(gameData.charAt(0) == 'L') {
-				SmartDashboard.putString("Turn", "Left");
-				// Do something...
-			}
-			else if(gameData.charAt(0) == 'R') {
-				SmartDashboard.putString("Turn", "Right");
-				// Do something...
-			}
-		}
+		Auton.Position robotPosition = autoChooser.getSelected();
+		SmartDashboard.putString("Starting Position", autoChooser.getSelected().toString());
+		Auton.Position switchPosition = Auton.getPositionFromChar(gameData.charAt(0));
+		Auton.Position scalePosition = Auton.getPositionFromChar(gameData.charAt(1));
+		autonomous = new Auton(robotPosition, switchPosition, scalePosition);
 		autonomous.start();
 	}
 
@@ -110,6 +120,8 @@ public class Robot extends TimedRobot {
 		OI.actuateButton.whenPressed(new ActuateIntake(true));
 		OI.actuateButton.whenReleased(new ActuateIntake(false));
 		OI.changeGearButton.whenPressed(new GearToggle());
+		
+		RobotMap.gyro.reset();
 	}
 
 	/**
@@ -134,5 +146,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Right Joystick X", OI.rightJoystick.getX());
 		SmartDashboard.putNumber("Right Joystick Y", OI.rightJoystick.getY());
 		SmartDashboard.putBoolean("Gear Shifted", gearPneumatics.getToggled());
+		SmartDashboard.putNumber("Gyro Angle", RobotMap.gyro.getAngle());
 	}
 }
