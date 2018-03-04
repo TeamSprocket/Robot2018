@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *	which is used to raise the power cube to the scale.
  */
 public class IntakeElevator extends Subsystem {
+	private static final double MAX_SPEED = 1.0;
 
 	/**
 	 * Moves the elevator at the given speed. Positive speeds
@@ -18,7 +19,11 @@ public class IntakeElevator extends Subsystem {
 	 * @param speed between -1.0 and 1.0
 	 */
 	public void moveElevator(double speed) {
-		RobotMap.intakeElevator.set(speed);
+		if(speed > 1.0)
+			speed = 1.0;
+		else if(speed < -1.0)
+			speed = -1.0;
+		RobotMap.intakeElevator.set(speed * MAX_SPEED);
 	}
 
 	public void initDefaultCommand() {

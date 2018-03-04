@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team3473.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -28,8 +27,8 @@ public class OI {
 	public static Button intakeButton = new JoystickButton(gamepad, 1);
 	public static Button outtakeButton = new JoystickButton(gamepad, 2);
 	public static Button actuateButton = new JoystickButton(gamepad, 3);
-
-	// Axes to use (for elevators)
-	public static GenericHID.Hand intakeHand = GenericHID.Hand.kLeft;
-	public static GenericHID.Hand climbHand = GenericHID.Hand.kRight;
+	public static Button raiseIntakeButton = new JoystickButton(gamepad, 6);
+	public static Button lowerIntakeButton = new JoystickButton(gamepad, 8);
+	public static Button raiseClimbButton = new JoystickButton(gamepad, 5);
+	public static Button lowerClimbButton = new JoystickButton(gamepad, 7);
 }

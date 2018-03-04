@@ -6,10 +6,10 @@ import org.usfirst.frc.team3473.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Raises or lowers the climb elevator according to joystick values.
+ * Raises or lowers the climb elevator according to whether the "raise"
+ * or "lower" buttons are pressed.
  */
 public class ElevateClimb extends Command {
-
 	public ElevateClimb() {
 		requires(Robot.climbElevator);
 	}
@@ -20,10 +20,12 @@ public class ElevateClimb extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double speed = OI.gamepad.getY(OI.climbHand);
-		if(Math.abs(speed) < 0.1)
-			speed = 0.0;
-		Robot.climbElevator.moveElevator(speed);
+		if(OI.raiseClimbButton.get())
+			Robot.climbElevator.moveElevator(1.0);
+		else if(OI.lowerClimbButton.get())
+			Robot.climbElevator.moveElevator(-1.0);
+		else
+			Robot.climbElevator.moveElevator(0.0);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -33,10 +35,12 @@ public class ElevateClimb extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		Robot.climbElevator.moveElevator(0.0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+		Robot.climbElevator.moveElevator(0.0);
 	}
 }

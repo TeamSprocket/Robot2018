@@ -30,8 +30,8 @@ public class RobotMap {
 	public static DoubleSolenoid gearPneumatics = new DoubleSolenoid(0, 1);
 
 	// Intake
-	public static WPI_TalonSRX intakeElevator = new WPI_TalonSRX(10);
-	public static WPI_TalonSRX intakeLeft = new WPI_TalonSRX(1);
+	public static WPI_TalonSRX intakeElevator = new WPI_TalonSRX(1);
+	public static WPI_TalonSRX intakeLeft = new WPI_TalonSRX(10);
 	public static WPI_TalonSRX intakeRight = new WPI_TalonSRX(2);
 	public static Solenoid actuationPiston = new Solenoid(2);
 

@@ -6,8 +6,8 @@ import org.usfirst.frc.team3473.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Raises or lowers the intake elevator according to joystick values. This is
- * the default ElevateIntake command used in teleop.
+ * Raises or lowers the intake elevator whenever the "raise" or "lower"
+ * buttons are pressed. This is the default command for the IntakeElevator.
  */
 public class ElevateIntake extends Command {
 
@@ -21,10 +21,12 @@ public class ElevateIntake extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double speed = OI.gamepad.getY(OI.intakeHand);
-		if(Math.abs(speed) < 0.1)
-			speed = 0.0;
-		Robot.intakeElevator.moveElevator(speed);
+		if(OI.raiseIntakeButton.get())
+			Robot.intakeElevator.moveElevator(1.0);
+		else if(OI.lowerIntakeButton.get())
+			Robot.intakeElevator.moveElevator(-1.0);
+		else
+			Robot.intakeElevator.moveElevator(0.0);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -34,10 +36,12 @@ public class ElevateIntake extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		Robot.intakeElevator.moveElevator(0.0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+		end();
 	}
 }
