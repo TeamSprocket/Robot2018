@@ -32,15 +32,15 @@ public class RobotMap {
 	// Intake
 	public static WPI_TalonSRX intakeElevator = new WPI_TalonSRX(1);
 	public static WPI_TalonSRX intakeLeft = new WPI_TalonSRX(10);
-	public static WPI_TalonSRX intakeRight = new WPI_TalonSRX(2);
+	public static WPI_TalonSRX intakeRight = new WPI_TalonSRX(9);
 	public static Solenoid actuationPiston = new Solenoid(2);
 
 	// Climb
-	public static WPI_TalonSRX climbElevator1 = new WPI_TalonSRX(3);
-	public static WPI_TalonSRX climbElevator2 = new WPI_TalonSRX(8);
+	public static WPI_TalonSRX climbRight = new WPI_TalonSRX(2);
+	public static WPI_TalonSRX climbLeft = new WPI_TalonSRX(8);
 	
 	// Sensors
-	public static Encoder leftEncoder = new Encoder(0, 1);
-	public static Encoder rightEncoder = new Encoder(2, 3);
+	public static Encoder leftEncoder = new Encoder(7, 6);
+	public static Encoder rightEncoder = new Encoder(9, 8);
 	public static Gyro gyro = new ADXRS450_Gyro();
 }

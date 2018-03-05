@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ClimbElevator extends Subsystem {
 
 	public void moveElevator(double speed) {
-		RobotMap.climbElevator1.set(speed);
-		RobotMap.climbElevator2.set(-speed);
+		RobotMap.climbRight.set(speed);
+		RobotMap.climbLeft.set(-speed);
 	}
 
 	public void initDefaultCommand() {
