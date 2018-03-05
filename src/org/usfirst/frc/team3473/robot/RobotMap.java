@@ -40,7 +40,8 @@ public class RobotMap {
 	public static WPI_TalonSRX climbElevator2 = new WPI_TalonSRX(8);
 	
 	// Sensors
-	public static Encoder leftEncoder = new Encoder(0, 1);
-	public static Encoder rightEncoder = new Encoder(2, 3);
+	public static Encoder leftEncoder = new Encoder(7, 6);
+	public static Encoder rightEncoder = new Encoder(9, 8, true);
+	public static Encoder intakeElevatorEncoder = new Encoder(0, 1);
 	public static Gyro gyro = new ADXRS450_Gyro();
 }

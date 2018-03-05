@@ -11,9 +11,11 @@ public class Auton extends CommandGroup {
 	
 	// TODO: fromCenter, fromRight
 	public Auton(Position robotPosition, Position switchPosition, Position scalePosition) {
-		if(robotPosition == Position.LEFT) {
-			fromLeft(switchPosition, scalePosition);
-		}
+//		if(robotPosition == Position.LEFT) {
+//			fromLeft(switchPosition, scalePosition);
+//		}
+		addSequential(new MoveDistance(300));
+		addSequential(new ElevateIntakeToHeight(2500));
 	}
 	
 	private void fromLeft(Position switchPosition, Position scalePosition) {
@@ -24,9 +26,9 @@ public class Auton extends CommandGroup {
 			addSequential(new MoveRollers(0));
 		}
 		else if(scalePosition == Position.LEFT) {
-			addSequential(new ConstantElevateIntake(1));
+			addSequential(new ElevateIntakeToHeight(1));
 			addSequential(new TimedCommand(500));
-			addSequential(new ConstantElevateIntake(0));
+			addSequential(new ElevateIntakeToHeight(0));
 			addSequential(new MoveRollers(-1));
 			addSequential(new TimedCommand(1000));
 			addSequential(new MoveRollers(0));

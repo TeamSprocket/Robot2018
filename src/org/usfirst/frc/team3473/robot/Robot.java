@@ -9,7 +9,6 @@ package org.usfirst.frc.team3473.robot;
 
 import org.usfirst.frc.team3473.robot.commands.ActuateIntake;
 import org.usfirst.frc.team3473.robot.commands.Auton;
-import org.usfirst.frc.team3473.robot.commands.Auton.Position;
 import org.usfirst.frc.team3473.robot.commands.GearToggle;
 import org.usfirst.frc.team3473.robot.commands.MoveRollers;
 import org.usfirst.frc.team3473.robot.subsystems.ClimbElevator;
@@ -23,7 +22,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -43,7 +41,6 @@ public class Robot extends TimedRobot {
 	public static GearPneumatics gearPneumatics = new GearPneumatics();
 
 	private Command autonomous;
-	private SendableChooser<Auton.Position> autoChooser;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -52,12 +49,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		RobotMap.gyro.calibrate();
-		
-		autoChooser = new SendableChooser<>();
-		autoChooser.addObject("Left", Position.LEFT);
-		autoChooser.addDefault("Center", Position.CENTER);
-		autoChooser.addDefault("Right", Position.RIGHT);
-		SmartDashboard.putData("Starting Position", autoChooser);
+		RobotMap.leftEncoder.reset();
+		RobotMap.rightEncoder.reset();
+		RobotMap.intakeElevatorEncoder.reset();
 	}
 
 	/**
@@ -89,11 +83,18 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		Auton.Position robotPosition;
+		if(OI.leftJoystick.getZ() > 0.33)
+			robotPosition = Auton.Position.RIGHT;
+		else if(OI.leftJoystick.getZ() < -0.33)
+			robotPosition = Auton.Position.LEFT;
+		else
+			robotPosition = Auton.Position.CENTER;
+		SmartDashboard.putString("Starting Position", robotPosition.toString());
+		
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		SmartDashboard.putString("Game Data", gameData);
 
-		Auton.Position robotPosition = autoChooser.getSelected();
-		SmartDashboard.putString("Starting Position", autoChooser.getSelected().toString());
 		Auton.Position switchPosition = Auton.getPositionFromChar(gameData.charAt(0));
 		Auton.Position scalePosition = Auton.getPositionFromChar(gameData.charAt(1));
 		autonomous = new Auton(robotPosition, switchPosition, scalePosition);

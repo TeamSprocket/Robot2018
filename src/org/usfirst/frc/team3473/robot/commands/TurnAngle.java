@@ -21,10 +21,10 @@ public class TurnAngle extends Command {
 
 	protected void initialize() {
 		RobotMap.gyro.reset();
-		Robot.drivetrain.arcadeDrive(0.0, turnSpeed);
 	}
 
 	protected void execute() {
+		Robot.drivetrain.arcadeDrive(0.0, turnSpeed);
 	}
 
 	protected boolean isFinished() {

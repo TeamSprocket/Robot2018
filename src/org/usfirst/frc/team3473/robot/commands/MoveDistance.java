@@ -12,31 +12,30 @@ import edu.wpi.first.wpilibj.command.Command;
 public class MoveDistance extends Command {
 	private static final double DEFAULT_SPEED = 0.3;
 	private double speed;
-	private int targetDistance;
+	private double targetDistance;
 
-	public MoveDistance(int distance) {
+	public MoveDistance(double distance) {
 		this(DEFAULT_SPEED, distance);
 	}
 
-	public MoveDistance(double speed, int distance) {
+	public MoveDistance(double speed, double distance) {
 		requires(Robot.drivetrain);
 		this.speed = speed;
-		targetDistance = distance;
+		targetDistance = Math.abs(distance);
 	}
 
 	protected void initialize() {
 		RobotMap.leftEncoder.reset();
 		RobotMap.rightEncoder.reset();
-
-		Robot.drivetrain.arcadeDrive(speed, 0.0);
 	}
 
 	protected void execute() {
+		Robot.drivetrain.arcadeDrive(speed, 0.0);
 	}
 
 	protected boolean isFinished() {
-		int averageDistance = (RobotMap.leftEncoder.get()
-				+ RobotMap.rightEncoder.get()) / 2;
+		double averageDistance = Math.abs(RobotMap.leftEncoder.getDistance()
+				+ RobotMap.rightEncoder.getDistance()) / 2.0;
 		return averageDistance >= targetDistance;
 	}
 
