@@ -21,17 +21,13 @@ public class Auton extends CommandGroup {
 	private void fromLeft(Position switchPosition, Position scalePosition) {
 		addSequential(new MoveDistance(50));
 		if(switchPosition == Position.LEFT) {
-			addSequential(new MoveRollers(-1));
-			addSequential(new TimedCommand(1000));
-			addSequential(new MoveRollers(0));
+			addSequential(new MoveRollers(-1, 1.0));
+			addSequential(new MoveRollers(0, 0.5));
 		}
 		else if(scalePosition == Position.LEFT) {
-			addSequential(new ElevateIntakeToHeight(1));
-			addSequential(new TimedCommand(500));
-			addSequential(new ElevateIntakeToHeight(0));
-			addSequential(new MoveRollers(-1));
-			addSequential(new TimedCommand(1000));
-			addSequential(new MoveRollers(0));
+			addSequential(new ElevateIntakeToHeight(2500));
+			addSequential(new MoveRollers(-1, 1.0));
+			addSequential(new MoveRollers(0, 0.5));
 		}
 	}
 	
