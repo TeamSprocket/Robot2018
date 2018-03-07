@@ -25,7 +25,7 @@ public class RobotMap {
 	public static WPI_TalonSRX frontLeft = new WPI_TalonSRX(6);
 	public static WPI_TalonSRX backLeft = new WPI_TalonSRX(7);
 	public static WPI_TalonSRX frontRight = new WPI_TalonSRX(5);
-	public static WPI_TalonSRX backRight = new WPI_TalonSRX(4);
+	public static WPI_TalonSRX backRight = new WPI_TalonSRX(4); 
 	public static DoubleSolenoid gearPneumatics = new DoubleSolenoid(0, 1);
 
 	// Intake
