@@ -27,7 +27,7 @@ public class IntakeElevator extends Subsystem {
 		if(speed >= 0.0)
 			RobotMap.intakeElevator.set(speed * MAX_UP_SPEED);
 		else
-			RobotMap.intakeElevator.set(speed * MAX_DOWN_SPEED);
+			RobotMap.intakeElevator.set(speed * MAX_UP_SPEED);
 	}
 
 	public void initDefaultCommand() {

@@ -118,8 +118,8 @@ public class Robot extends TimedRobot {
 		OI.intakeButton.whenReleased(new MoveRollers(0));
 		OI.outtakeButton.whenPressed(new MoveRollers(-1));
 		OI.outtakeButton.whenReleased(new MoveRollers(0));
-		OI.actuateButton.whenPressed(new ActuateIntake(true));
-		OI.actuateButton.whenReleased(new ActuateIntake(false));
+		OI.actuateButton.whenPressed(new ActuateIntake());
+		//OI.actuateButton.whenReleased(new ActuateIntake(false));
 		OI.changeGearButton.whenPressed(new GearToggle());
 		
 		RobotMap.gyro.reset();

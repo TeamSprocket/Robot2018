@@ -12,7 +12,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 /**
@@ -33,7 +32,7 @@ public class RobotMap {
 	public static WPI_TalonSRX intakeElevator = new WPI_TalonSRX(1);
 	public static WPI_TalonSRX intakeLeft = new WPI_TalonSRX(10);
 	public static WPI_TalonSRX intakeRight = new WPI_TalonSRX(9);
-	public static Solenoid actuationPiston = new Solenoid(2);
+	public static DoubleSolenoid actuationPiston = new DoubleSolenoid(2, 3);
 
 	// Climb
 	public static WPI_TalonSRX climbRight = new WPI_TalonSRX(2);

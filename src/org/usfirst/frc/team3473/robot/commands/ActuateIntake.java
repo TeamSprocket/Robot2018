@@ -8,18 +8,24 @@ import edu.wpi.first.wpilibj.command.Command;
  *	A single-step command that actuates the intake piston once.
  */
 public class ActuateIntake extends Command {
-	private boolean actuate;
+	//private boolean actuate;
 
 	/**
 	 * Creates a new Actuate command.
 	 */
-	public ActuateIntake(boolean actuateOutwards) {
-		actuate = actuateOutwards;
+	public ActuateIntake(/*boolean actuateOutwards*/) {
+		//actuate = actuateOutwards;
+		requires(Robot.intakeActuation);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.intakeActuation.actuate(actuate);
+		if(Robot.intakeActuation.getToggled()) {
+			Robot.intakeActuation.actuateUp();
+		}
+		else {
+			Robot.intakeActuation.actuateDown();
+		}
 	}
 
 	// Called repeatedly when this Command is scheduled to run
