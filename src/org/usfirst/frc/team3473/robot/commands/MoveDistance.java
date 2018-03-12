@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *	encoder reaches a certain value.
  */
 public class MoveDistance extends Command {
-	private static final double DEFAULT_SPEED = 0.3;
+	private static final double DEFAULT_SPEED = 0.5;
 	private double speed;
 	private double targetDistance;
 

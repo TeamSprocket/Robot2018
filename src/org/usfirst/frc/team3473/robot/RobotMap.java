@@ -29,18 +29,23 @@ public class RobotMap {
 	public static DoubleSolenoid gearPneumatics = new DoubleSolenoid(0, 1);
 
 	// Intake
-	public static WPI_TalonSRX intakeElevator = new WPI_TalonSRX(1);
-	public static WPI_TalonSRX intakeLeft = new WPI_TalonSRX(10);
+	public static WPI_TalonSRX intakeLeft = new WPI_TalonSRX(8);
 	public static WPI_TalonSRX intakeRight = new WPI_TalonSRX(9);
 	public static DoubleSolenoid actuationPiston = new DoubleSolenoid(2, 3);
+	
+	// Intake Elevator
+	public static WPI_TalonSRX intakeElevator = new WPI_TalonSRX(3);
+	public static DoubleSolenoid elevatorPneumatics = new DoubleSolenoid(4, 5);
 
 	// Climb
-	public static WPI_TalonSRX climbRight = new WPI_TalonSRX(2);
-	public static WPI_TalonSRX climbLeft = new WPI_TalonSRX(8);
+	// as of 03/07/18 we have no climb. intake elevator is now doubled as a
+	// climb elevator
+	//public static WPI_TalonSRX climbRight = new WPI_TalonSRX(2);
+	//public static WPI_TalonSRX climbLeft = new WPI_TalonSRX(8);
 	
 	// Sensors
 	public static Encoder leftEncoder = new Encoder(7, 6);
-	public static Encoder rightEncoder = new Encoder(9, 8, true);
+	public static Encoder rightEncoder = new Encoder(5, 4, true);
 	public static Encoder intakeElevatorEncoder = new Encoder(0, 1);
 	public static Gyro gyro = new ADXRS450_Gyro();
 }

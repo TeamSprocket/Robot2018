@@ -16,8 +16,8 @@ public class Intake extends Subsystem {
 	 * @param speed the speed at which to move the rollers
 	 */
 	public void moveRollers(double speed) {
-		RobotMap.intakeLeft.set(speed);
-		RobotMap.intakeRight.set(-speed);
+		RobotMap.intakeLeft.set(-speed);
+		RobotMap.intakeRight.set(speed);
 	}
 
 	public void intake() {

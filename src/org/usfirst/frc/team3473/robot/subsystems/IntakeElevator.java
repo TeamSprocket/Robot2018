@@ -3,6 +3,8 @@ package org.usfirst.frc.team3473.robot.subsystems;
 import org.usfirst.frc.team3473.robot.RobotMap;
 import org.usfirst.frc.team3473.robot.commands.ElevateIntake;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -10,8 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *	which is used to raise the power cube to the scale.
  */
 public class IntakeElevator extends Subsystem {
-	private static final double MAX_UP_SPEED = 1.0;
-	private static final double MAX_DOWN_SPEED = 0.5;
+	private static final double MAX_SPEED = 1.0;
 
 	/**
 	 * Moves the elevator at the given speed. Positive speeds
@@ -25,9 +26,16 @@ public class IntakeElevator extends Subsystem {
 		else if(speed < -1.0)
 			speed = -1.0;
 		if(speed >= 0.0)
-			RobotMap.intakeElevator.set(speed * MAX_UP_SPEED);
+			RobotMap.intakeElevator.set(speed * MAX_SPEED);
 		else
-			RobotMap.intakeElevator.set(speed * MAX_UP_SPEED);
+			RobotMap.intakeElevator.set(speed * MAX_SPEED);
+	}
+	
+	public void setBrakeMode(boolean brake) {
+		if(brake)
+			RobotMap.intakeElevator.setNeutralMode(NeutralMode.Brake);
+		else
+			RobotMap.intakeElevator.setNeutralMode(NeutralMode.Coast);
 	}
 
 	public void initDefaultCommand() {

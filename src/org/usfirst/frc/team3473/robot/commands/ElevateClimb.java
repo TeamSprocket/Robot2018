@@ -20,12 +20,12 @@ public class ElevateClimb extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if(OI.raiseClimbButton.get())
-			Robot.climbElevator.moveElevator(1.0);
-		else if(OI.lowerClimbButton.get())
-			Robot.climbElevator.moveElevator(-1.0);
-		else
-			Robot.climbElevator.moveElevator(0.0);
+//		if(OI.raiseClimbButton.get())
+//			Robot.climbElevator.moveElevator(1.0);
+//		else if(OI.lowerClimbButton.get())
+//			Robot.climbElevator.moveElevator(-1.0);
+//		else
+//			Robot.climbElevator.moveElevator(0.0);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

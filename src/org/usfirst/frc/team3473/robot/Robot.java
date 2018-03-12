@@ -11,12 +11,14 @@ import org.usfirst.frc.team3473.robot.commands.ActuateIntake;
 import org.usfirst.frc.team3473.robot.commands.Auton;
 import org.usfirst.frc.team3473.robot.commands.GearToggle;
 import org.usfirst.frc.team3473.robot.commands.MoveRollers;
+import org.usfirst.frc.team3473.robot.commands.WrenchToggle;
 import org.usfirst.frc.team3473.robot.subsystems.ClimbElevator;
 import org.usfirst.frc.team3473.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3473.robot.subsystems.GearPneumatics;
 import org.usfirst.frc.team3473.robot.subsystems.Intake;
 import org.usfirst.frc.team3473.robot.subsystems.IntakeActuation;
 import org.usfirst.frc.team3473.robot.subsystems.IntakeElevator;
+import org.usfirst.frc.team3473.robot.subsystems.WrenchPneumatics;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -39,6 +41,7 @@ public class Robot extends TimedRobot {
 	public static ClimbElevator climbElevator = new ClimbElevator();
 	public static IntakeActuation intakeActuation = new IntakeActuation();
 	public static GearPneumatics gearPneumatics = new GearPneumatics();
+	public static WrenchPneumatics wrenchPneumatics = new WrenchPneumatics();
 
 	private Command autonomous;
 
@@ -52,6 +55,7 @@ public class Robot extends TimedRobot {
 		RobotMap.leftEncoder.reset();
 		RobotMap.rightEncoder.reset();
 		RobotMap.intakeElevatorEncoder.reset();
+		intakeElevator.setBrakeMode(true);
 	}
 
 	/**
@@ -84,12 +88,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		Auton.Position robotPosition;
-		if(OI.leftJoystick.getZ() > 0.33)
+		if(OI.leftJoystick.getRawAxis(3) >= 0.3)
 			robotPosition = Auton.Position.RIGHT;
-		else if(OI.leftJoystick.getZ() < -0.33)
-			robotPosition = Auton.Position.LEFT;
-		else
+		else if(OI.leftJoystick.getRawAxis(3) > -0.3)
 			robotPosition = Auton.Position.CENTER;
+		else
+			robotPosition = Auton.Position.LEFT;
 		SmartDashboard.putString("Starting Position", robotPosition.toString());
 		
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -107,6 +111,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		updateDashboardValues();
 	}
 
 	@Override
@@ -119,6 +124,7 @@ public class Robot extends TimedRobot {
 		OI.outtakeButton.whenPressed(new MoveRollers(-1));
 		OI.outtakeButton.whenReleased(new MoveRollers(0));
 		OI.actuateButton.whenPressed(new ActuateIntake());
+		OI.ratchetWrenchToggle.whenPressed(new WrenchToggle());
 		//OI.actuateButton.whenReleased(new ActuateIntake(false));
 		OI.changeGearButton.whenPressed(new GearToggle());
 		
@@ -148,5 +154,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Right Joystick Y", OI.rightJoystick.getY());
 		SmartDashboard.putBoolean("Gear Shifted", gearPneumatics.getToggled());
 		SmartDashboard.putNumber("Gyro Angle", RobotMap.gyro.getAngle());
+		SmartDashboard.putNumber("Left Encoder", RobotMap.leftEncoder.getDistance());
+		SmartDashboard.putNumber("Right Encoder", RobotMap.rightEncoder.getDistance());
 	}
 }
