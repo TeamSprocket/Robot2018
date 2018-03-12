@@ -7,7 +7,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *	A subsystem that intakes and outtakes a power cube.
  */
 public class Intake extends Subsystem {
-	private static final double DEFAULT_SPEED = 1.0;
+	private static final double INTAKE_SPEED = 1.0;
+	private static final double OUTTAKE_SPEED = 0.4;
 
 	/**
 	 * Moves the rollers at a given speed.
@@ -21,11 +22,11 @@ public class Intake extends Subsystem {
 	}
 
 	public void intake() {
-		moveRollers(DEFAULT_SPEED);
+		moveRollers(INTAKE_SPEED);
 	}
 
 	public void outtake() {
-		moveRollers(-DEFAULT_SPEED);
+		moveRollers(-OUTTAKE_SPEED);
 	}
 
 	public void stop() {
