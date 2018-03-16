@@ -25,17 +25,19 @@ public class IntakeElevator extends Subsystem {
 			speed = 1.0;
 		else if(speed < -1.0)
 			speed = -1.0;
-		if(speed >= 0.0)
-			RobotMap.intakeElevator.set(speed * MAX_SPEED);
-		else
-			RobotMap.intakeElevator.set(speed * MAX_SPEED);
+		RobotMap.intakeElevator1.set(speed * MAX_SPEED);
+		RobotMap.intakeElevator2.set(speed * MAX_SPEED);
 	}
 	
 	public void setBrakeMode(boolean brake) {
-		if(brake)
-			RobotMap.intakeElevator.setNeutralMode(NeutralMode.Brake);
-		else
-			RobotMap.intakeElevator.setNeutralMode(NeutralMode.Coast);
+		if(brake) {
+			RobotMap.intakeElevator1.setNeutralMode(NeutralMode.Brake);
+			RobotMap.intakeElevator2.setNeutralMode(NeutralMode.Brake);
+		}
+		else {
+			RobotMap.intakeElevator1.setNeutralMode(NeutralMode.Coast);
+			RobotMap.intakeElevator2.setNeutralMode(NeutralMode.Coast);
+		}
 	}
 
 	public void initDefaultCommand() {
