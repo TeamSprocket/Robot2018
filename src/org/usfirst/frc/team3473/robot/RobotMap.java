@@ -22,21 +22,21 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
  */
 public class RobotMap {
 	// Drivetrain
-	public static WPI_TalonSRX frontLeft = new WPI_TalonSRX(6);
-	public static WPI_TalonSRX backLeft = new WPI_TalonSRX(7);
-	public static WPI_TalonSRX frontRight = new WPI_TalonSRX(5);
+	public static WPI_TalonSRX frontLeft = new WPI_TalonSRX(1);
+	public static WPI_TalonSRX backLeft = new WPI_TalonSRX(2);
+	public static WPI_TalonSRX frontRight = new WPI_TalonSRX(3);
 	public static WPI_TalonSRX backRight = new WPI_TalonSRX(4);
 	public static DoubleSolenoid gearPneumatics = new DoubleSolenoid(0, 1);
 
 	// Intake
-	public static WPI_TalonSRX intakeLeft = new WPI_TalonSRX(8);
-	public static WPI_TalonSRX intakeRight = new WPI_TalonSRX(9);
-	public static DoubleSolenoid actuationPiston = new DoubleSolenoid(2, 3);
+	public static WPI_TalonSRX intakeLeft = new WPI_TalonSRX(5);
+	public static WPI_TalonSRX intakeRight = new WPI_TalonSRX(6);
+	public static DoubleSolenoid actuationPiston = new DoubleSolenoid(4, 5);
 	
 	// Intake Elevator
-	public static WPI_TalonSRX intakeElevator1 = new WPI_TalonSRX(3);
-	public static WPI_TalonSRX intakeElevator2 = new WPI_TalonSRX(2);
-	public static DoubleSolenoid elevatorPneumatics = new DoubleSolenoid(4, 5);
+	public static WPI_TalonSRX intakeElevator1 = new WPI_TalonSRX(7);
+	public static WPI_TalonSRX intakeElevator2 = new WPI_TalonSRX(8);
+//	public static DoubleSolenoid elevatorPneumatics = new DoubleSolenoid(4, 5);
 
 	// Climb
 	// as of 03/07/18 we have no climb. intake elevator is now doubled as a
@@ -45,8 +45,8 @@ public class RobotMap {
 	//public static WPI_TalonSRX climbLeft = new WPI_TalonSRX(8);
 	
 	// Sensors
-	public static Encoder leftEncoder = new Encoder(7, 6);
-	public static Encoder rightEncoder = new Encoder(5, 4, true);
-	public static Encoder intakeElevatorEncoder = new Encoder(0, 1);
+	public static Encoder leftEncoder = new Encoder(0, 1, true);
+	public static Encoder rightEncoder = new Encoder(4, 5);
+	public static Encoder intakeElevatorEncoder = new Encoder(2, 3);
 	public static Gyro gyro = new ADXRS450_Gyro();
 }

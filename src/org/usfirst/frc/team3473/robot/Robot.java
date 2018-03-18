@@ -88,20 +88,30 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		Auton.Position robotPosition;
-		if(OI.leftJoystick.getRawAxis(3) >= 0.3)
+		if(OI.leftJoystick.getRawAxis(3) > 0.33)
 			robotPosition = Auton.Position.RIGHT;
-		else if(OI.leftJoystick.getRawAxis(3) > -0.3)
+		else if(OI.leftJoystick.getRawAxis(3) >= -0.33)
 			robotPosition = Auton.Position.CENTER;
 		else
 			robotPosition = Auton.Position.LEFT;
+		
+		Auton.Mode autonMode = Auton.Mode.SWITCH;
+//		if(OI.rightJoystick.getRawAxis(3) > 0.33)
+//			autonMode = Auton.Mode.BASELINE;
+//		else if(OI.rightJoystick.getRawAxis(3) >= -0.33)
+//			autonMode = Auton.Mode.SWITCH;
+//		else
+//			autonMode = Auton.Mode.SCALE;
+		
 		SmartDashboard.putString("Starting Position", robotPosition.toString());
+		SmartDashboard.putString("Auton Mode", autonMode.toString());
 		
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		SmartDashboard.putString("Game Data", gameData);
 
 		Auton.Position switchPosition = Auton.getPositionFromChar(gameData.charAt(0));
 		Auton.Position scalePosition = Auton.getPositionFromChar(gameData.charAt(1));
-		autonomous = new Auton(robotPosition, switchPosition, scalePosition);
+		autonomous = new Auton(robotPosition, autonMode, switchPosition, scalePosition);
 		autonomous.start();
 	}
 
@@ -124,8 +134,7 @@ public class Robot extends TimedRobot {
 		OI.outtakeButton.whenPressed(new MoveRollers(-1));
 		OI.outtakeButton.whenReleased(new MoveRollers(0));
 		OI.actuateButton.whenPressed(new ActuateIntake());
-		OI.ratchetWrenchToggle.whenPressed(new WrenchToggle());
-		//OI.actuateButton.whenReleased(new ActuateIntake(false));
+//		OI.ratchetWrenchToggle.whenPressed(new WrenchToggle());
 		OI.changeGearButton.whenPressed(new GearToggle());
 		
 		RobotMap.gyro.reset();

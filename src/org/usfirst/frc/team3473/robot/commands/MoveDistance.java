@@ -34,9 +34,10 @@ public class MoveDistance extends Command {
 	}
 
 	protected boolean isFinished() {
-		double averageDistance = Math.abs(RobotMap.leftEncoder.getDistance()
-				+ RobotMap.rightEncoder.getDistance()) / 2.0;
-		return averageDistance >= targetDistance;
+//		double averageDistance = Math.abs(RobotMap.leftEncoder.getDistance()
+//				+ RobotMap.rightEncoder.getDistance()) / 2.0;
+//		return averageDistance >= targetDistance;
+		return RobotMap.leftEncoder.getDistance() >= targetDistance;
 	}
 
 	protected void end() {

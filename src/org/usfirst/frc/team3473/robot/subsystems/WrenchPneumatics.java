@@ -15,12 +15,12 @@ public class WrenchPneumatics extends Subsystem {
 		return toggled;
 	}
 	public void movePneumaticsForward() {
-		RobotMap.elevatorPneumatics.set(DoubleSolenoid.Value.kForward);
-		toggled = true;
+//		RobotMap.elevatorPneumatics.set(DoubleSolenoid.Value.kForward);
+//		toggled = true;
 	}
 
 	public void movePneumaticsBackward() {
-		RobotMap.elevatorPneumatics.set(DoubleSolenoid.Value.kReverse);
-		toggled = false;
+//		RobotMap.elevatorPneumatics.set(DoubleSolenoid.Value.kReverse);
+//		toggled = false;
 	}
 }

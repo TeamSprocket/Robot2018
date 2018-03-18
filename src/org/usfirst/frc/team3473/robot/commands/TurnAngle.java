@@ -10,8 +10,13 @@ import edu.wpi.first.wpilibj.command.Command;
  *	reaches a given value.
  */
 public class TurnAngle extends Command {
+	private static final double DEFAULT_TURNING_SPEED = 0.75;
 	private double turnSpeed;
 	private double targetAngle;
+	
+	public TurnAngle(double angle) {
+		this(Math.signum(angle) * DEFAULT_TURNING_SPEED, angle);
+	}
 
 	public TurnAngle(double turn, double angle) {
 		requires(Robot.drivetrain);

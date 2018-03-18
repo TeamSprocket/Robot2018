@@ -13,7 +13,7 @@ public class ActuateIntake extends Command {
 	/**
 	 * Creates a new Actuate command.
 	 */
-	public ActuateIntake(/*boolean actuateOutwards*/) {
+	public ActuateIntake() {
 		//actuate = actuateOutwards;
 		requires(Robot.intakeActuation);
 	}
