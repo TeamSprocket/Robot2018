@@ -22,12 +22,18 @@ public class ElevateIntake extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		//changed to 0.25 from 1 for testing
-		if(OI.raiseIntakeButton.get())
+		if(OI.raiseIntakeButton.get()) {
 			Robot.intakeElevator.moveElevator(1.0);
-		else if(OI.lowerIntakeButton.get())
+//			Robot.intakeElevator.setBrakeMode(false);
+		}
+		else if(OI.lowerIntakeButton.get()) {
 			Robot.intakeElevator.moveElevator(-0.4);
-		else
+//			Robot.intakeElevator.setBrakeMode(false);
+		}
+		else {
 			Robot.intakeElevator.moveElevator(0.0);
+//			Robot.intakeElevator.setBrakeMode(true);
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

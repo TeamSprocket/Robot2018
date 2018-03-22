@@ -11,15 +11,15 @@ public class Auton extends CommandGroup {
 	
 
 	public Auton(Position robotPosition, Mode mode, Position switchPosition, Position scalePosition) {
-		if(mode == Mode.BASELINE) {
-			crossBaseline();
-		}
-		else if(mode == Mode.SWITCH) {
+//		if(mode == Mode.BASELINE) {
+//			crossBaseline();
+//		}
+//		else if(mode == Mode.SWITCH) {
 			switchMode(robotPosition, switchPosition, scalePosition);
-		}
-		else if(mode == Mode.SCALE) {
-			scaleMode(robotPosition, switchPosition, scalePosition);
-		}
+//		}
+//		else if(mode == Mode.SCALE) {
+//			scaleMode(robotPosition, switchPosition, scalePosition);
+//		}
 	}
 	
 	private void crossBaseline() {
@@ -27,43 +27,43 @@ public class Auton extends CommandGroup {
 	}
 	
 	private void switchMode(Position robotPosition, Position switchPosition, Position scalePosition) {
-		if(robotPosition == Position.CENTER) {
-			switchFromCenter(switchPosition);
-		}
-		else if(robotPosition == switchPosition) {
-			switchFromSide(switchPosition);
-		}
-		else if(robotPosition == scalePosition) {
-			scaleFromSide(scalePosition);
-		}
-		else {
-			crossBaseline();
-		}
-//		if(robotPosition == Position.LEFT) {
-//			fromLeft(switchPosition, scalePosition);
-//		}
-//		else if(robotPosition == Position.RIGHT) {
-//			fromRight(switchPosition, scalePosition);
-//		}
-//		else if(robotPosition == Position.CENTER) {
+//		if(robotPosition == Position.CENTER) {
 //			switchFromCenter(switchPosition);
 //		}
-	}
-	
-	private void scaleMode(Position robotPosition, Position switchPosition, Position scalePosition) {
-		if(robotPosition == Position.CENTER) {
+//		else if(robotPosition == switchPosition) {
+//			switchFromSide(switchPosition);
+//		}
+//		else if(robotPosition == scalePosition) {
+//			scaleFromSide(scalePosition);
+//		}
+//		else {
+//			crossBaseline();
+//		}
+		if(robotPosition == Position.LEFT) {
+			fromLeft(switchPosition, scalePosition);
+		}
+		else if(robotPosition == Position.RIGHT) {
+			fromRight(switchPosition, scalePosition);
+		}
+		else if(robotPosition == Position.CENTER) {
 			switchFromCenter(switchPosition);
 		}
-		else if(robotPosition == scalePosition) {
-			scaleFromSide(scalePosition);
-		}
-		else if(robotPosition == switchPosition) {
-			switchFromSide(switchPosition);
-		}
-		else {
-			crossBaseline();
-		}
 	}
+	
+//	private void scaleMode(Position robotPosition, Position switchPosition, Position scalePosition) {
+//		if(robotPosition == Position.CENTER) {
+//			switchFromCenter(switchPosition);
+//		}
+//		else if(robotPosition == scalePosition) {
+//			scaleFromSide(scalePosition);
+//		}
+//		else if(robotPosition == switchPosition) {
+//			switchFromSide(switchPosition);
+//		}
+//		else {
+//			crossBaseline();
+//		}
+//	}
 	
 	private void fromLeft(Position switchPosition, Position scalePosition) {
 		addSequential(new MoveDistance(1100));
@@ -106,28 +106,28 @@ public class Auton extends CommandGroup {
 		}
 	}
 	
-	// Move forward, turn 90 degrees, drop cube
-	private void switchFromSide(Position switchPosition) {
-		addSequential(new MoveDistance(1300));
-		if(switchPosition == Position.LEFT)
-			addSequential(new TurnAngle(0.75, 80));
-		else if(switchPosition == Position.RIGHT)
-			addSequential(new TurnAngle(-0.75, -80));
-		addSequential(new ActuateIntake());
-		addSequential(new ElevateIntakeToHeight(600));
-		addSequential(new MoveRollers(-1, 1.0));
-	}
-	
-	private void scaleFromSide(Position scalePosition) {
-		addSequential(new MoveDistance(2200));
-		if(scalePosition == Position.LEFT)
-			addSequential(new TurnAngle(0.75, 80));
-		else if(scalePosition == Position.RIGHT)
-			addSequential(new TurnAngle(-0.75, -80));
-		addSequential(new ActuateIntake());
-		addSequential(new ElevateIntakeToHeight(1500));
-		addSequential(new MoveRollers(-1, 1.0));
-	}
+//	// Move forward, turn 90 degrees, drop cube
+//	private void switchFromSide(Position switchPosition) {
+//		addSequential(new MoveDistance(1300));
+//		if(switchPosition == Position.LEFT)
+//			addSequential(new TurnAngle(0.75, 80));
+//		else if(switchPosition == Position.RIGHT)
+//			addSequential(new TurnAngle(-0.75, -80));
+//		addSequential(new ActuateIntake());
+//		addSequential(new ElevateIntakeToHeight(600));
+//		addSequential(new MoveRollers(-1, 1.0));
+//	}
+//	
+//	private void scaleFromSide(Position scalePosition) {
+//		addSequential(new MoveDistance(2200));
+//		if(scalePosition == Position.LEFT)
+//			addSequential(new TurnAngle(0.75, 80));
+//		else if(scalePosition == Position.RIGHT)
+//			addSequential(new TurnAngle(-0.75, -80));
+//		addSequential(new ActuateIntake());
+//		addSequential(new ElevateIntakeToHeight(1500));
+//		addSequential(new MoveRollers(-1, 1.0));
+//	}
 	
 	/**
 	 * Converts a character from the game data into the corresponding Position.

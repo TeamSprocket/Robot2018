@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *	which is used to raise the power cube to the scale.
  */
 public class IntakeElevator extends Subsystem {
-	private static final double MAX_SPEED = 0.75;
+	private static final double MAX_SPEED = 1.0;
 
 	/**
 	 * Moves the elevator at the given speed. Positive speeds

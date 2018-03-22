@@ -11,7 +11,6 @@ import org.usfirst.frc.team3473.robot.commands.ActuateIntake;
 import org.usfirst.frc.team3473.robot.commands.Auton;
 import org.usfirst.frc.team3473.robot.commands.GearToggle;
 import org.usfirst.frc.team3473.robot.commands.MoveRollers;
-import org.usfirst.frc.team3473.robot.commands.WrenchToggle;
 import org.usfirst.frc.team3473.robot.subsystems.ClimbElevator;
 import org.usfirst.frc.team3473.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3473.robot.subsystems.GearPneumatics;
@@ -51,11 +50,11 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		RobotMap.gyro.calibrate();
+//		RobotMap.gyro.calibrate();
 		RobotMap.leftEncoder.reset();
 		RobotMap.rightEncoder.reset();
 		RobotMap.intakeElevatorEncoder.reset();
-		intakeElevator.setBrakeMode(true);
+//		intakeElevator.setBrakeMode(true);
 	}
 
 	/**
@@ -137,7 +136,7 @@ public class Robot extends TimedRobot {
 //		OI.ratchetWrenchToggle.whenPressed(new WrenchToggle());
 		OI.changeGearButton.whenPressed(new GearToggle());
 		
-		RobotMap.gyro.reset();
+//		RobotMap.gyro.reset();
 	}
 
 	/**
@@ -162,7 +161,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Right Joystick X", OI.rightJoystick.getX());
 		SmartDashboard.putNumber("Right Joystick Y", OI.rightJoystick.getY());
 		SmartDashboard.putBoolean("Gear Shifted", gearPneumatics.getToggled());
-		SmartDashboard.putNumber("Gyro Angle", RobotMap.gyro.getAngle());
+//		SmartDashboard.putNumber("Gyro Angle", RobotMap.gyro.getAngle());
 		SmartDashboard.putNumber("Left Encoder", RobotMap.leftEncoder.getDistance());
 		SmartDashboard.putNumber("Right Encoder", RobotMap.rightEncoder.getDistance());
 	}
