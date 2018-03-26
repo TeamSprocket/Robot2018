@@ -2,6 +2,7 @@ package org.usfirst.frc.team3473.robot.commands;
 
 import org.usfirst.frc.team3473.robot.OI;
 import org.usfirst.frc.team3473.robot.Robot;
+import org.usfirst.frc.team3473.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -21,7 +22,10 @@ public class ElevateIntake extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		//changed to 0.25 from 1 for testing
+		double limitDist = RobotMap.intakeElevatorEncoder.getDistance();
+//		if(OI.raiseIntakeButton.get() && limitDist >= 1000){
+//			Robot.intakeElevator.moveElevator(0.0);
+//		}
 		if(OI.raiseIntakeButton.get()) {
 			Robot.intakeElevator.moveElevator(1.0);
 //			Robot.intakeElevator.setBrakeMode(false);

@@ -41,6 +41,8 @@ public class Robot extends TimedRobot {
 	public static IntakeActuation intakeActuation = new IntakeActuation();
 	public static GearPneumatics gearPneumatics = new GearPneumatics();
 	public static WrenchPneumatics wrenchPneumatics = new WrenchPneumatics();
+	
+	public static MoveRollers moveRollers = new MoveRollers();
 
 	private Command autonomous;
 
@@ -54,6 +56,7 @@ public class Robot extends TimedRobot {
 		RobotMap.leftEncoder.reset();
 		RobotMap.rightEncoder.reset();
 		RobotMap.intakeElevatorEncoder.reset();
+		intake.setBrakeMode(true);
 //		intakeElevator.setBrakeMode(true);
 	}
 
@@ -128,10 +131,11 @@ public class Robot extends TimedRobot {
 		if(autonomous != null)
 			autonomous.cancel();
 
-		OI.intakeButton.whenPressed(new MoveRollers(1));
-		OI.intakeButton.whenReleased(new MoveRollers(0));
-		OI.outtakeButton.whenPressed(new MoveRollers(-1));
-		OI.outtakeButton.whenReleased(new MoveRollers(0));
+		moveRollers.start();
+//		OI.intakeButton.whenPressed(new MoveRollers(1));
+//		OI.intakeButton.whenReleased(new MoveRollers(0));
+//		OI.outtakeButton.whenPressed(new MoveRollers(-1));
+//		OI.outtakeButton.whenReleased(new MoveRollers(0));
 		OI.actuateButton.whenPressed(new ActuateIntake());
 //		OI.ratchetWrenchToggle.whenPressed(new WrenchToggle());
 		OI.changeGearButton.whenPressed(new GearToggle());
@@ -164,5 +168,6 @@ public class Robot extends TimedRobot {
 //		SmartDashboard.putNumber("Gyro Angle", RobotMap.gyro.getAngle());
 		SmartDashboard.putNumber("Left Encoder", RobotMap.leftEncoder.getDistance());
 		SmartDashboard.putNumber("Right Encoder", RobotMap.rightEncoder.getDistance());
+		SmartDashboard.putNumber("Elevator Encoder", RobotMap.intakeElevatorEncoder.getDistance());
 	}
 }

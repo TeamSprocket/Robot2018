@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3473.robot.commands;
 
+import org.usfirst.frc.team3473.robot.OI;
 import org.usfirst.frc.team3473.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,6 +11,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class MoveRollers extends Command {
 	private int direction;
+	
+	public MoveRollers(){
+		requires(Robot.intake);
+	}
 
 	/**
 	 * Moves the rollers in the specified direction.
@@ -35,12 +40,14 @@ public class MoveRollers extends Command {
 	}
 
 	protected void execute() {
-		if(direction == 1)
-			Robot.intake.intake();
-		else if(direction == -1)
-			Robot.intake.outtake();
-		else
-			Robot.intake.stop();
+//		if(direction == 1)
+//			Robot.intake.intake();
+//		else if(direction == -1)
+//			Robot.intake.outtake();
+//		else
+//			Robot.intake.stop();
+		double outtakeSpeed = -OI.gamepad.getRawAxis(1);
+		Robot.intake.moveRollers(outtakeSpeed);
 	}
 
 	protected boolean isFinished() {

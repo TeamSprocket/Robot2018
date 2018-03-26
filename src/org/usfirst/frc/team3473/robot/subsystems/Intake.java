@@ -1,6 +1,10 @@
 package org.usfirst.frc.team3473.robot.subsystems;
 
+import org.usfirst.frc.team3473.robot.OI;
 import org.usfirst.frc.team3473.robot.RobotMap;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -8,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Intake extends Subsystem {
 	private static final double INTAKE_SPEED = 1.0;
-	private static final double OUTTAKE_SPEED = 0.5;
+	private static final double OUTTAKE_SPEED = 0.55;
 
 	/**
 	 * Moves the rollers at a given speed.
@@ -27,6 +31,17 @@ public class Intake extends Subsystem {
 
 	public void outtake() {
 		moveRollers(-OUTTAKE_SPEED);
+	}
+	
+	public void setBrakeMode(boolean brake) {
+		if(brake) {
+			RobotMap.intakeLeft.setNeutralMode(NeutralMode.Brake);
+			RobotMap.intakeRight.setNeutralMode(NeutralMode.Brake);
+		}
+		else {
+			RobotMap.intakeLeft.setNeutralMode(NeutralMode.Coast);
+			RobotMap.intakeRight.setNeutralMode(NeutralMode.Coast);
+		}
 	}
 
 	public void stop() {

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3473.robot.commands;
 
+import org.usfirst.frc.team3473.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -23,7 +25,7 @@ public class Auton extends CommandGroup {
 	}
 	
 	private void crossBaseline() {
-		addSequential(new MoveDistance(1100));
+		addSequential(new MoveDistance(1000));
 	}
 	
 	private void switchMode(Position robotPosition, Position switchPosition, Position scalePosition) {
@@ -41,12 +43,14 @@ public class Auton extends CommandGroup {
 //		}
 		if(robotPosition == Position.LEFT) {
 			fromLeft(switchPosition, scalePosition);
+//			crossBaseline();
 		}
 		else if(robotPosition == Position.RIGHT) {
 			fromRight(switchPosition, scalePosition);
+//			crossBaseline();
 		}
 		else if(robotPosition == Position.CENTER) {
-			switchFromCenter(switchPosition);
+			crossBaseline();
 		}
 	}
 	
@@ -66,21 +70,21 @@ public class Auton extends CommandGroup {
 //	}
 	
 	private void fromLeft(Position switchPosition, Position scalePosition) {
+		addSequential(new ActuateIntake());
 		addSequential(new MoveDistance(1100));
-		if(switchPosition == Position.LEFT) {
-			addSequential(new ActuateIntake());
-			addSequential(new ElevateIntakeToHeight(600));
-			addSequential(new MoveRollers(-1, 0.75));
-		}
+//		if(switchPosition == Position.LEFT) {
+//			addSequential(new ElevateIntakeToHeight(900));
+//			addSequential(new MoveRollersA(-1, 0.75));
+//		}
 	}
 	
 	private void fromRight(Position switchPosition, Position scalePosition) {
+		addSequential(new ActuateIntake());
 		addSequential(new MoveDistance(1100));
-		if(switchPosition == Position.RIGHT) {
-			addSequential(new ActuateIntake());
-			addSequential(new ElevateIntakeToHeight(600));
-			addSequential(new MoveRollers(-1, 0.75));
-		}
+//		if(switchPosition == Position.RIGHT) {
+//			addSequential(new ElevateIntakeToHeight(900));
+//			addSequential(new MoveRollersA(-1, 0.75));
+//		}
 	}
 	
 	// Drops a cube into either alliance plate
