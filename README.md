@@ -23,12 +23,11 @@ Pressing Button 1 on the left joystick toggles the drivetrain between high gear 
 ### Gamepad Controls
 Control               | Button
 ----------------------|--------
-Intake                | 1
-Outtake               | 2
+Intake                | Left Joystick Y-Axis Up
+Outtake               | Left Joystick Y-Axis Down
 Raise Intake Elevator | 6
 Lower Intake Elevator | 8
-Raise Climb Elevator  | 5
-Lower Climb Elevator  | 7
+Actuate Intake        | 3
 
 ## Autonomous
 Code for the autonomous period is handled in the [Auton](src/org/usfirst/frc/team3473/robot/commands/Auton.java) class. The autonomous code requires encoders and a gyro.
@@ -37,8 +36,8 @@ To configure the starting position of the robot on the field, position the slide
 
 Slider Position | Robot Position
 ----------------|----------------
-Bottom          | Right
-Middle          | Center
 Top             | Left
+Middle          | Center
+Bottom          | Right
 
 The autonomous code uses the [plate assignment data](https://wpilib.screenstepslive.com/s/4485/m/getting_started/l/826278-2018-game-data-details) given by the Field Management System at the beginning of the match.
