@@ -5,7 +5,7 @@ Code for Team Sprocket's 2018 robot for FIRST Power Up.
 The robot has the following components:
 * A west coast drive that is able to shift gears (using a DoubleSolenoid)
 * An intake and an elevator that can lift power cubes to the scale
-* A climb elevator, allowing the robot to climb at the end of the match
+* ~~A climb elevator, allowing the robot to climb at the end of the match~~
 
 See the [RobotMap](src/org/usfirst/frc/team3473/robot/RobotMap.java) class for CANTalon IDs, pneumatics, etc.
 
