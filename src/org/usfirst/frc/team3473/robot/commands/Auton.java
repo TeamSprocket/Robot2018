@@ -88,7 +88,7 @@ public class Auton extends CommandGroup {
 	}
 	
 	// Drops a cube into either alliance plate
-	private void switchFromCenter(Position  switchPosition) {
+	private void switchFromCenter(Position switchPosition) {
 		addSequential(new MoveDistance(500));
 		if(switchPosition == Position.LEFT) {
 //			addSequential(new TurnAngle(-0.75, -80));
@@ -100,13 +100,13 @@ public class Auton extends CommandGroup {
 //			addSequential(new MoveRollers(-1, 0.75));
 		}
 		else if(switchPosition == Position.RIGHT) {
-			addSequential(new TurnUsingTime(0.75, 1.0));
+			addSequential(new TurnAngle(80));
 			addSequential(new MoveDistance(800));
-			addSequential(new TurnUsingTime(-0.75, 0.5));
+			addSequential(new TurnAngle(-80));
 			addSequential(new MoveDistance(400));
 			addSequential(new ActuateIntake());
 			addSequential(new ElevateIntakeToHeight(600));
-			addSequential(new MoveRollers(-1, 0.75));
+			addSequential(new MoveRollersAuto(-1, 0.75));
 		}
 	}
 	

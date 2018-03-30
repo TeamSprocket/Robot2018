@@ -22,21 +22,18 @@ public class ElevateIntake extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double limitDist = RobotMap.intakeElevatorEncoder.getDistance();
+//		double limitDist = RobotMap.intakeElevatorEncoder.getDistance();
 //		if(OI.raiseIntakeButton.get() && limitDist >= 1000){
 //			Robot.intakeElevator.moveElevator(0.0);
 //		}
 		if(OI.raiseIntakeButton.get()) {
 			Robot.intakeElevator.moveElevator(1.0);
-//			Robot.intakeElevator.setBrakeMode(false);
 		}
 		else if(OI.lowerIntakeButton.get()) {
 			Robot.intakeElevator.moveElevator(-0.4);
-//			Robot.intakeElevator.setBrakeMode(false);
 		}
 		else {
 			Robot.intakeElevator.moveElevator(0.0);
-//			Robot.intakeElevator.setBrakeMode(true);
 		}
 	}
 

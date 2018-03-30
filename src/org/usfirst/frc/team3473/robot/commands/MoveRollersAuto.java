@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3473.robot.commands;
 
-import org.usfirst.frc.team3473.robot.OI;
 import org.usfirst.frc.team3473.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,10 +8,10 @@ import edu.wpi.first.wpilibj.command.Command;
  *	A command that moves the rollers on the Robot's Intake subsystem,
  *	allowing the robot to intake/outtake power cubes.
  */
-public class MoveRollersA extends Command {
+public class MoveRollersAuto extends Command {
 	private int direction;
 	
-	public MoveRollersA(){
+	public MoveRollersAuto(){
 		requires(Robot.intake);
 	}
 
@@ -20,7 +19,7 @@ public class MoveRollersA extends Command {
 	 * Moves the rollers in the specified direction.
 	 * @param direction the direction to move the rollers (1=intake, -1=outtake, 0=stop)
 	 */
-	public MoveRollersA(int direction) {
+	public MoveRollersAuto(int direction) {
 		requires(Robot.intake);
 		this.direction = direction;
 	}
@@ -31,7 +30,7 @@ public class MoveRollersA extends Command {
 	 * @param direction the direction to move the rollers (1=intake, -1=outtake, 0=stop)
 	 * @param timeout the time, in seconds, before this command stops
 	 */
-	public MoveRollersA(int direction, double timeout) {
+	public MoveRollersAuto(int direction, double timeout) {
 		this(direction);
 		setTimeout(timeout);
 	}

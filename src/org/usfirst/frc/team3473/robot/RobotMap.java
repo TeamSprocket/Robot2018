@@ -48,5 +48,5 @@ public class RobotMap {
 	public static Encoder leftEncoder = new Encoder(0, 1, true);
 	public static Encoder rightEncoder = new Encoder(4, 5, true);
 	public static Encoder intakeElevatorEncoder = new Encoder(2, 3, true);
-//	public static Gyro gyro = new ADXRS450_Gyro();
+	public static Gyro gyro = new ADXRS450_Gyro();
 }

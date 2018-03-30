@@ -11,13 +11,11 @@ import org.usfirst.frc.team3473.robot.commands.ActuateIntake;
 import org.usfirst.frc.team3473.robot.commands.Auton;
 import org.usfirst.frc.team3473.robot.commands.GearToggle;
 import org.usfirst.frc.team3473.robot.commands.MoveRollers;
-import org.usfirst.frc.team3473.robot.subsystems.ClimbElevator;
 import org.usfirst.frc.team3473.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3473.robot.subsystems.GearPneumatics;
 import org.usfirst.frc.team3473.robot.subsystems.Intake;
 import org.usfirst.frc.team3473.robot.subsystems.IntakeActuation;
 import org.usfirst.frc.team3473.robot.subsystems.IntakeElevator;
-import org.usfirst.frc.team3473.robot.subsystems.WrenchPneumatics;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -37,10 +35,8 @@ public class Robot extends TimedRobot {
 	public static Drivetrain drivetrain = new Drivetrain();
 	public static Intake intake = new Intake();
 	public static IntakeElevator intakeElevator = new IntakeElevator();
-	public static ClimbElevator climbElevator = new ClimbElevator();
 	public static IntakeActuation intakeActuation = new IntakeActuation();
 	public static GearPneumatics gearPneumatics = new GearPneumatics();
-	public static WrenchPneumatics wrenchPneumatics = new WrenchPneumatics();
 	
 	public static MoveRollers moveRollers = new MoveRollers();
 
@@ -165,7 +161,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Right Joystick X", OI.rightJoystick.getX());
 		SmartDashboard.putNumber("Right Joystick Y", OI.rightJoystick.getY());
 		SmartDashboard.putBoolean("Gear Shifted", gearPneumatics.getToggled());
-//		SmartDashboard.putNumber("Gyro Angle", RobotMap.gyro.getAngle());
+		SmartDashboard.putNumber("Gyro Angle", RobotMap.gyro.getAngle());
 		SmartDashboard.putNumber("Left Encoder", RobotMap.leftEncoder.getDistance());
 		SmartDashboard.putNumber("Right Encoder", RobotMap.rightEncoder.getDistance());
 		SmartDashboard.putNumber("Elevator Encoder", RobotMap.intakeElevatorEncoder.getDistance());
