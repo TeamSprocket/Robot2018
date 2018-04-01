@@ -45,7 +45,6 @@ public class MoveRollersAuto extends Command {
 			Robot.intake.outtake();
 		else
 			Robot.intake.stop();
-
 	}
 
 	protected boolean isFinished() {

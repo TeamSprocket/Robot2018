@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Intake extends Subsystem {
 	private static final double INTAKE_SPEED = 1.0;
-	private static final double OUTTAKE_SPEED = 0.55;
+	private static final double OUTTAKE_SPEED = 1.0;
 
 	/**
 	 * Moves the rollers at a given speed.

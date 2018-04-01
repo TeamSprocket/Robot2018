@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ElevateIntakeToHeight extends Command {
 	private static final double DEFAULT_SPEED = 1.0;
+	
+	private long startingTime;
 
 	private double elevatorSpeed;
 	private double position;
@@ -38,6 +40,7 @@ public class ElevateIntakeToHeight extends Command {
 	}
 
 	protected void initialize() {
+		startingTime = System.currentTimeMillis();
 		if(RobotMap.intakeElevatorEncoder.getDistance() < position) {
 			elevatorSpeed = Math.abs(elevatorSpeed);
 		}
@@ -65,6 +68,7 @@ public class ElevateIntakeToHeight extends Command {
 
 	protected void end() {
 		Robot.intakeElevator.moveElevator(0.0);
+		System.out.println(System.currentTimeMillis() - startingTime);
 	}
 
 	protected void interrupted() {

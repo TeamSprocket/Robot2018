@@ -1,7 +1,5 @@
 package org.usfirst.frc.team3473.robot.commands;
 
-import org.usfirst.frc.team3473.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -29,29 +27,27 @@ public class Auton extends CommandGroup {
 	}
 	
 	private void switchMode(Position robotPosition, Position switchPosition, Position scalePosition) {
-//		if(robotPosition == Position.CENTER) {
-//			switchFromCenter(switchPosition);
-//		}
-//		else if(robotPosition == switchPosition) {
-//			switchFromSide(switchPosition);
-//		}
-//		else if(robotPosition == scalePosition) {
-//			scaleFromSide(scalePosition);
-//		}
-//		else {
-//			crossBaseline();
-//		}
-		if(robotPosition == Position.LEFT) {
-			fromLeft(switchPosition, scalePosition);
-//			crossBaseline();
+		if(robotPosition == Position.CENTER) {
+			switchFromCenter(switchPosition);
 		}
-		else if(robotPosition == Position.RIGHT) {
-			fromRight(switchPosition, scalePosition);
-//			crossBaseline();
+		else if(robotPosition == switchPosition) {
+			switchFromSide(switchPosition);
 		}
-		else if(robotPosition == Position.CENTER) {
+		else if(robotPosition == scalePosition) {
+			scaleFromSide(scalePosition);
+		}
+		else {
 			crossBaseline();
 		}
+//		if(robotPosition == Position.LEFT) {
+//			fromLeft(switchPosition, scalePosition);
+//		}
+//		else if(robotPosition == Position.RIGHT) {
+//			fromRight(switchPosition, scalePosition);
+//		}
+//		else if(robotPosition == Position.CENTER) {
+//			crossBaseline();
+//		}
 	}
 	
 //	private void scaleMode(Position robotPosition, Position switchPosition, Position scalePosition) {
@@ -70,39 +66,39 @@ public class Auton extends CommandGroup {
 //	}
 	
 	private void fromLeft(Position switchPosition, Position scalePosition) {
-		addSequential(new ActuateIntake());
+//		addSequential(new ActuateIntake());
 		addSequential(new MoveDistance(1100));
-//		if(switchPosition == Position.LEFT) {
-//			addSequential(new ElevateIntakeToHeight(900));
-//			addSequential(new MoveRollersA(-1, 0.75));
-//		}
+		if(switchPosition == Position.LEFT) {
+			addSequential(new ElevateIntakeToHeight(800));
+			addSequential(new MoveRollersAuto(-1, 2.0));
+		}
 	}
 	
 	private void fromRight(Position switchPosition, Position scalePosition) {
-		addSequential(new ActuateIntake());
+//		addSequential(new ActuateIntake());
 		addSequential(new MoveDistance(1100));
-//		if(switchPosition == Position.RIGHT) {
-//			addSequential(new ElevateIntakeToHeight(900));
-//			addSequential(new MoveRollersA(-1, 0.75));
-//		}
+		if(switchPosition == Position.RIGHT) {
+			addSequential(new ElevateIntakeToHeight(800));
+			addSequential(new MoveRollersAuto(-1, 2.0));
+		}
 	}
 	
 	// Drops a cube into either alliance plate
 	private void switchFromCenter(Position switchPosition) {
 		addSequential(new MoveDistance(500));
 		if(switchPosition == Position.LEFT) {
-//			addSequential(new TurnAngle(-0.75, -80));
-//			addSequential(new MoveDistance(500));
-//			addSequential(new TurnAngle(0.75, 80));
-//			addSequential(new MoveDistance(500));
-//			addSequential(new ActuateIntake());
-//			addSequential(new ElevateIntakeToHeight(600));
-//			addSequential(new MoveRollers(-1, 0.75));
+			addSequential(new TurnAngle(-0.75, -80));
+			addSequential(new MoveDistance(500));
+			addSequential(new TurnAngle(0.75, 80));
+			addSequential(new MoveDistance(500));
+			addSequential(new ActuateIntake());
+			addSequential(new ElevateIntakeToHeight(600));
+			addSequential(new MoveRollersAuto(-1, 0.75));
 		}
 		else if(switchPosition == Position.RIGHT) {
-			addSequential(new TurnAngle(80));
+			addSequential(new TurnAngle(0.75, 80));
 			addSequential(new MoveDistance(800));
-			addSequential(new TurnAngle(-80));
+			addSequential(new TurnAngle(-0.75, -80));
 			addSequential(new MoveDistance(400));
 			addSequential(new ActuateIntake());
 			addSequential(new ElevateIntakeToHeight(600));
@@ -110,28 +106,34 @@ public class Auton extends CommandGroup {
 		}
 	}
 	
-//	// Move forward, turn 90 degrees, drop cube
-//	private void switchFromSide(Position switchPosition) {
-//		addSequential(new MoveDistance(1300));
-//		if(switchPosition == Position.LEFT)
-//			addSequential(new TurnAngle(0.75, 80));
-//		else if(switchPosition == Position.RIGHT)
-//			addSequential(new TurnAngle(-0.75, -80));
-//		addSequential(new ActuateIntake());
-//		addSequential(new ElevateIntakeToHeight(600));
-//		addSequential(new MoveRollers(-1, 1.0));
-//	}
-//	
-//	private void scaleFromSide(Position scalePosition) {
-//		addSequential(new MoveDistance(2200));
-//		if(scalePosition == Position.LEFT)
-//			addSequential(new TurnAngle(0.75, 80));
-//		else if(scalePosition == Position.RIGHT)
-//			addSequential(new TurnAngle(-0.75, -80));
-//		addSequential(new ActuateIntake());
-//		addSequential(new ElevateIntakeToHeight(1500));
-//		addSequential(new MoveRollers(-1, 1.0));
-//	}
+	// Move forward, turn 90 degrees, drop cube
+	private void switchFromSide(Position switchPosition) {
+		addSequential(new ActuateIntake());
+		addSequential(new MoveDistance(2400));
+		if(switchPosition == Position.LEFT)
+			addSequential(new TurnAngle(0.75, 50));
+		else if(switchPosition == Position.RIGHT)
+			addSequential(new TurnAngle(-0.75, -50));
+		addSequential(new MoveDistance(100));
+		addSequential(new ElevateIntakeToHeight(800));
+		addSequential(new MoveRollersAuto(-1, 1.0));
+	}
+	
+	private void scaleFromSide(Position scalePosition) {
+		addSequential(new ActuateIntake());
+		addSequential(new MoveDistance(5600));
+		if(scalePosition == Position.LEFT) {
+			addSequential(new TurnAngle(0.75, 48));
+			addSequential(new MoveDistance(-140));
+		}
+		else if(scalePosition == Position.RIGHT)
+			addSequential(new TurnAngle(-0.75, -48));
+		addSequential(new ElevateIntakeToHeight(0.8, 1650));
+		addSequential(new MoveDistance(200));
+		addParallel(new MoveRollersAuto(-1, 0.75));
+		addSequential(new MoveDistance(-200));
+		addSequential(new ElevateIntakeToHeight(-0.8, 300));
+	}
 	
 	/**
 	 * Converts a character from the game data into the corresponding Position.

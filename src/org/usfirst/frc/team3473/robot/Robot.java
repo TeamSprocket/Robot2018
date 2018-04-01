@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-//		RobotMap.gyro.calibrate();
+		RobotMap.gyro.calibrate();
 		RobotMap.leftEncoder.reset();
 		RobotMap.rightEncoder.reset();
 		RobotMap.intakeElevatorEncoder.reset();
@@ -85,6 +85,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		RobotMap.intakeElevatorEncoder.reset();
 		Auton.Position robotPosition;
 		if(OI.leftJoystick.getRawAxis(3) > 0.33)
 			robotPosition = Auton.Position.RIGHT;
@@ -126,6 +127,11 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		if(autonomous != null)
 			autonomous.cancel();
+		
+		RobotMap.intakeElevatorEncoder.reset();
+		RobotMap.leftEncoder.reset();
+		RobotMap.rightEncoder.reset();
+		RobotMap.gyro.reset();
 
 		moveRollers.start();
 //		OI.intakeButton.whenPressed(new MoveRollers(1));

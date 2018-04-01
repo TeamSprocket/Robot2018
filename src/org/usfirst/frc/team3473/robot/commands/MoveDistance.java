@@ -15,7 +15,7 @@ public class MoveDistance extends Command {
 	private double targetDistance;
 
 	public MoveDistance(double distance) {
-		this(DEFAULT_SPEED, distance);
+		this(Math.signum(distance) * DEFAULT_SPEED, distance);
 	}
 
 	public MoveDistance(double speed, double distance) {
@@ -30,13 +30,13 @@ public class MoveDistance extends Command {
 	}
 
 	protected void execute() {
-		Robot.drivetrain.arcadeDrive(speed, 0.0);
+		Robot.drivetrain.tankDrive(speed, speed * 0.96);
 	}
 
 	protected boolean isFinished() {
 		double averageDistance = Math.abs(RobotMap.leftEncoder.getDistance()
 				+ RobotMap.rightEncoder.getDistance()) / 2.0;
-		return averageDistance >= targetDistance;
+		return averageDistance >= Math.abs(targetDistance);
 //		return RobotMap.leftEncoder.getDistance() >= targetDistance;
 	}
 
