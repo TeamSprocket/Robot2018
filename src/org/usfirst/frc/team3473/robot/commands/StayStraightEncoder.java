@@ -14,7 +14,7 @@ public class StayStraightEncoder extends Command {
 	private double rightSpeed;
 	private double leftSpeed;
 	private double kP = 0.03;
-	
+
 	public StayStraightEncoder(double distance) {
 		this(Math.signum(distance) * DEFAULT_SPEED, distance);
 	}
@@ -26,35 +26,37 @@ public class StayStraightEncoder extends Command {
 		targetDistance = Math.abs(distance);
 	}
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
+	// Called just before this Command runs the first time
+	protected void initialize() {
 		RobotMap.leftEncoder.reset();
 		RobotMap.rightEncoder.reset();
-    }
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    		double leftDistance = RobotMap.leftEncoder.getDistance();
-    		double rightDistance = RobotMap.rightEncoder.getDistance();
-    		double difference = leftDistance - rightDistance;
-    		leftSpeed -= difference * kP;
-    		rightSpeed += difference * kP;
-    		Robot.drivetrain.tankDrive(leftSpeed, rightSpeed);
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		double leftDistance = RobotMap.leftEncoder.getDistance();
+		double rightDistance = RobotMap.rightEncoder.getDistance();
+		double difference = leftDistance - rightDistance;
+		leftSpeed -= difference * kP;
+		rightSpeed += difference * kP;
+		Robot.drivetrain.tankDrive(leftSpeed, rightSpeed);
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-    	double averageDistance = Math.abs(RobotMap.leftEncoder.getDistance()
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		double averageDistance = Math.abs(RobotMap.leftEncoder.getDistance()
 				+ RobotMap.rightEncoder.getDistance()) / 2.0;
 		return averageDistance >= targetDistance;
-    }
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+		Robot.drivetrain.tankDrive(0.0, 0.0);
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+		end();
+	}
 }

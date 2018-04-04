@@ -14,7 +14,7 @@ public class StayStraightGyro extends Command {
 	private double rightSpeed;
 	private double leftSpeed;
 	private double kP = 0.03;
-	
+
 	public StayStraightGyro(double distance) {
 		this(Math.signum(distance) * DEFAULT_SPEED, distance);
 	}
@@ -26,40 +26,42 @@ public class StayStraightGyro extends Command {
 		targetDistance = Math.abs(distance);
 	}
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    		RobotMap.gyro.reset();
-    		RobotMap.leftEncoder.reset();
-    		RobotMap.rightEncoder.reset();
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		RobotMap.gyro.reset();
+		RobotMap.leftEncoder.reset();
+		RobotMap.rightEncoder.reset();
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {	
-    		double currentAngle = RobotMap.gyro.getAngle();
-    		rightSpeed += (kP * currentAngle);
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {	
+		double currentAngle = RobotMap.gyro.getAngle();
+		rightSpeed += (kP * currentAngle);
 		leftSpeed -= (kP * currentAngle);
-//    		if(currentAngle > 0) {
-//    			rightSpeed += (kP * currentAngle);
-//    		}
-//    		else if(currentAngle < 0) {
-//    			leftSpeed -= (kP * currentAngle);
-//    		}
-    		Robot.drivetrain.tankDrive(leftSpeed, rightSpeed);
-    }
+//		if(currentAngle > 0) {
+//			rightSpeed += (kP * currentAngle);
+//		}
+//		else if(currentAngle < 0) {
+//			leftSpeed -= (kP * currentAngle);
+//		}
+		Robot.drivetrain.tankDrive(leftSpeed, rightSpeed);
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-    	double averageDistance = Math.abs(RobotMap.leftEncoder.getDistance()
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		double averageDistance = Math.abs(RobotMap.leftEncoder.getDistance()
 				+ RobotMap.rightEncoder.getDistance()) / 2.0;
 		return averageDistance >= targetDistance;
-    }
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+		Robot.drivetrain.tankDrive(0.0, 0.0);
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+		end();
+	}
 }

@@ -50,23 +50,24 @@ public class Auton extends CommandGroup {
 //		}
 	}
 	
-//	private void scaleMode(Position robotPosition, Position switchPosition, Position scalePosition) {
-//		if(robotPosition == Position.CENTER) {
-//			switchFromCenter(switchPosition);
-//		}
-//		else if(robotPosition == scalePosition) {
-//			scaleFromSide(scalePosition);
-//		}
-//		else if(robotPosition == switchPosition) {
-//			switchFromSide(switchPosition);
-//		}
-//		else {
-//			crossBaseline();
-//		}
-//	}
+	private void scaleMode(Position robotPosition, Position switchPosition, Position scalePosition) {
+		if(robotPosition == Position.CENTER) {
+			switchFromCenter(switchPosition);
+		}
+		else if(robotPosition == scalePosition) {
+			scaleFromSide(scalePosition);
+		}
+		else if(robotPosition == switchPosition) {
+			switchFromSide(switchPosition);
+		}
+		else {
+			crossBaseline();
+		}
+	}
 	
+	// Drives forward and drops the cube (assumes robot is positioned directly in front of switch).
 	private void fromLeft(Position switchPosition, Position scalePosition) {
-//		addSequential(new ActuateIntake());
+		addSequential(new ActuateIntake());
 		addSequential(new MoveDistance(1100));
 		if(switchPosition == Position.LEFT) {
 			addSequential(new ElevateIntakeToHeight(800));
@@ -74,8 +75,9 @@ public class Auton extends CommandGroup {
 		}
 	}
 	
+	// Drives forward and drops the cube (assumes robot is positioned directly in front of switch).
 	private void fromRight(Position switchPosition, Position scalePosition) {
-//		addSequential(new ActuateIntake());
+		addSequential(new ActuateIntake());
 		addSequential(new MoveDistance(1100));
 		if(switchPosition == Position.RIGHT) {
 			addSequential(new ElevateIntakeToHeight(800));

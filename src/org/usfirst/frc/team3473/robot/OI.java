@@ -29,7 +29,4 @@ public class OI {
 	public static Button actuateButton = new JoystickButton(gamepad, 3);
 	public static Button raiseIntakeButton = new JoystickButton(gamepad, 6);
 	public static Button lowerIntakeButton = new JoystickButton(gamepad, 8);
-//	public static Button ratchetWrenchToggle = new JoystickButton(gamepad, 5);
-	//public static Button raiseClimbButton = new JoystickButton(gamepad, 5);
-	//public static Button lowerClimbButton = new JoystickButton(gamepad, 7);
 }
