@@ -87,21 +87,21 @@ public class Auton extends CommandGroup {
 	private void switchFromCenter(Position switchPosition) {
 		addSequential(new MoveDistance(500));
 		if(switchPosition == Position.LEFT) {
-			addSequential(new TurnAngle(-0.75, -80));
+			addSequential(new TurnAngle(-0.75, -40));
 			addSequential(new MoveDistance(500));
-			addSequential(new TurnAngle(0.75, 80));
+			addSequential(new TurnAngle(0.75, 40));
 			addSequential(new MoveDistance(500));
 			addSequential(new ActuateIntake());
-			addSequential(new ElevateIntakeToHeight(600));
+			addSequential(new ElevateIntakeToHeight(800));
 			addSequential(new MoveRollersAuto(-1, 0.75));
 		}
 		else if(switchPosition == Position.RIGHT) {
-			addSequential(new TurnAngle(0.75, 80));
+			addSequential(new TurnAngle(0.75, 40));
 			addSequential(new MoveDistance(800));
-			addSequential(new TurnAngle(-0.75, -80));
+			addSequential(new TurnAngle(-0.75, -40));
 			addSequential(new MoveDistance(400));
 			addSequential(new ActuateIntake());
-			addSequential(new ElevateIntakeToHeight(600));
+			addSequential(new ElevateIntakeToHeight(800));
 			addSequential(new MoveRollersAuto(-1, 0.75));
 		}
 	}
@@ -126,8 +126,10 @@ public class Auton extends CommandGroup {
 			addSequential(new TurnAngle(0.75, 48));
 			addSequential(new MoveDistance(-140));
 		}
-		else if(scalePosition == Position.RIGHT)
+		else if(scalePosition == Position.RIGHT) {
 			addSequential(new TurnAngle(-0.75, -48));
+			addSequential(new MoveDistance(-100));
+		}
 		addSequential(new ElevateIntakeToHeight(0.8, 1650));
 		addSequential(new MoveDistance(200));
 		addParallel(new MoveRollersAuto(-1, 0.75));
