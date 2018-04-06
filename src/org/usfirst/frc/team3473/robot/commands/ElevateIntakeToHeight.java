@@ -40,6 +40,7 @@ public class ElevateIntakeToHeight extends Command {
 	}
 
 	protected void initialize() {
+		Robot.intakeElevator.initializeCounter();
 		startingTime = System.currentTimeMillis();
 		if(RobotMap.intakeElevatorEncoder.getDistance() < position) {
 			elevatorSpeed = Math.abs(elevatorSpeed);
@@ -57,7 +58,7 @@ public class ElevateIntakeToHeight extends Command {
 	// elevator will cause the encoder value to increase, while lowering the
 	// elevator will cause the encoder value to decrease.
 	protected boolean isFinished() {
-		if(elevatorSpeed > 0.0 && RobotMap.intakeElevatorEncoder.getDistance() > position) {
+		if(elevatorSpeed > 0.0 && (Robot.intakeElevator.isSwitchSet() || RobotMap.intakeElevatorEncoder.getDistance() > position)) {
 			return true;
 		}
 		else if(elevatorSpeed < 0.0 && RobotMap.intakeElevatorEncoder.getDistance() < position) {

@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -41,6 +42,7 @@ public class Robot extends TimedRobot {
 	public static MoveRollers moveRollers = new MoveRollers();
 
 	private Command autonomous;
+	private SendableChooser<Auton.Mode> chooser;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -54,6 +56,15 @@ public class Robot extends TimedRobot {
 		RobotMap.intakeElevatorEncoder.reset();
 		intake.setBrakeMode(true);
 //		intakeElevator.setBrakeMode(true);
+		
+		chooser = new SendableChooser<>();
+		chooser.addObject("Baseline only", Auton.Mode.BASELINE);
+		chooser.addObject("Move forward switch", Auton.Mode.SWITCH_ONLY);
+		chooser.addDefault("Switch Priority", Auton.Mode.SWITCH_PRIORITY);
+		chooser.addObject("Scale Priority", Auton.Mode.SCALE_PRIORITY);
+		SmartDashboard.putData("Auto Mode", chooser);
+		
+		SmartDashboard.putData("Gyro", RobotMap.gyro);
 	}
 
 	/**
@@ -93,13 +104,8 @@ public class Robot extends TimedRobot {
 		else
 			robotPosition = Auton.Position.LEFT;
 		
-		Auton.Mode autonMode = Auton.Mode.SWITCH;
-//		if(OI.rightJoystick.getRawAxis(3) > 0.33)
-//			autonMode = Auton.Mode.BASELINE;
-//		else if(OI.rightJoystick.getRawAxis(3) >= -0.33)
-//			autonMode = Auton.Mode.SWITCH;
-//		else
-//			autonMode = Auton.Mode.SCALE;
+		
+		Auton.Mode autonMode = chooser.getSelected();
 		
 		SmartDashboard.putString("Starting Position", robotPosition.toString());
 		SmartDashboard.putString("Auton Mode", autonMode.toString());
@@ -170,5 +176,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Left Encoder", RobotMap.leftEncoder.getDistance());
 		SmartDashboard.putNumber("Right Encoder", RobotMap.rightEncoder.getDistance());
 		SmartDashboard.putNumber("Elevator Encoder", RobotMap.intakeElevatorEncoder.getDistance());
+		SmartDashboard.putBoolean("Limit Switch", RobotMap.limitSwitch.get());
 	}
 }

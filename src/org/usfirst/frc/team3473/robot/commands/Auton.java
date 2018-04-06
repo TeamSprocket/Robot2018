@@ -7,19 +7,22 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class Auton extends CommandGroup {
 	public enum Position {LEFT, CENTER, RIGHT}
-	public enum Mode {BASELINE, SWITCH, SCALE}
+	public enum Mode {BASELINE, SWITCH_ONLY, SWITCH_PRIORITY, SCALE_PRIORITY}
 	
 
 	public Auton(Position robotPosition, Mode mode, Position switchPosition, Position scalePosition) {
-//		if(mode == Mode.BASELINE) {
-//			crossBaseline();
-//		}
-//		else if(mode == Mode.SWITCH) {
+		if(mode == Mode.BASELINE) {
+			crossBaseline();
+		}
+		else if(mode == Mode.SWITCH_ONLY) {
+			simpleSwitchMode(robotPosition, switchPosition, scalePosition);
+		}
+		else if(mode == Mode.SWITCH_PRIORITY) {
 			switchMode(robotPosition, switchPosition, scalePosition);
-//		}
-//		else if(mode == Mode.SCALE) {
-//			scaleMode(robotPosition, switchPosition, scalePosition);
-//		}
+		}
+		else if(mode == Mode.SCALE_PRIORITY) {
+			scaleMode(robotPosition, switchPosition, scalePosition);
+		}
 	}
 	
 	private void crossBaseline() {
@@ -39,15 +42,18 @@ public class Auton extends CommandGroup {
 		else {
 			crossBaseline();
 		}
-//		if(robotPosition == Position.LEFT) {
-//			fromLeft(switchPosition, scalePosition);
-//		}
-//		else if(robotPosition == Position.RIGHT) {
-//			fromRight(switchPosition, scalePosition);
-//		}
-//		else if(robotPosition == Position.CENTER) {
-//			crossBaseline();
-//		}
+	}
+	
+	private void simpleSwitchMode(Position robotPosition, Position switchPosition, Position scalePosition) {
+		if(robotPosition == Position.LEFT) {
+			fromLeft(switchPosition, scalePosition);
+		}
+		else if(robotPosition == Position.RIGHT) {
+			fromRight(switchPosition, scalePosition);
+		}
+		else if(robotPosition == Position.CENTER) {
+			crossBaseline();
+		}
 	}
 	
 	private void scaleMode(Position robotPosition, Position switchPosition, Position scalePosition) {

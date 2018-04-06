@@ -5,6 +5,7 @@ import org.usfirst.frc.team3473.robot.commands.ElevateIntake;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -13,6 +14,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class IntakeElevator extends Subsystem {
 	private static final double MAX_SPEED = 1.0;
+	
+	public static Counter counter = new Counter(RobotMap.limitSwitch);
 
 	/**
 	 * Moves the elevator at the given speed. Positive speeds
@@ -38,6 +41,19 @@ public class IntakeElevator extends Subsystem {
 			RobotMap.intakeElevator1.setNeutralMode(NeutralMode.Coast);
 			RobotMap.intakeElevator2.setNeutralMode(NeutralMode.Coast);
 		}
+	}
+	
+	public void initializeCounter() {
+		counter.reset();
+	}
+	
+	/**
+	 * Returns true if the switch has been pressed any time
+	 * since it was last initialized.
+	 * @return whether the switch has been pressed
+	 */
+	public boolean isSwitchSet() {
+		return counter.get() > 0;
 	}
 
 	public void initDefaultCommand() {
