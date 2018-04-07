@@ -20,7 +20,7 @@ public class ActuateIntake extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		if(Robot.intakeActuation.getToggled()) {
+		if(!Robot.intakeActuation.getToggled()) {
 			Robot.intakeActuation.actuateUp();
 		}
 		else {

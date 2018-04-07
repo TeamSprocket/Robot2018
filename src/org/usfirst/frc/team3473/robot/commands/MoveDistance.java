@@ -30,7 +30,7 @@ public class MoveDistance extends Command {
 	}
 
 	protected void execute() {
-		Robot.drivetrain.tankDrive(speed, speed * 0.96);
+		Robot.drivetrain.tankDrive(speed, speed);
 	}
 
 	protected boolean isFinished() {

@@ -93,14 +93,14 @@ public class Auton extends CommandGroup {
 	
 	// Drops a cube into either alliance plate
 	private void switchFromCenter(Position switchPosition) {
-		addSequential(new MoveDistance(500));
+		addSequential(new ActuateIntake());
+		addSequential(new MoveDistance(400));
 		if(switchPosition == Position.LEFT) {
 			addSequential(new TurnAngle(-0.75, -40));
-			addSequential(new MoveDistance(500));
+			addSequential(new MoveDistance(800));
 			addSequential(new TurnAngle(0.75, 40));
-			addSequential(new MoveDistance(500));
-			addSequential(new ActuateIntake());
-			addSequential(new ElevateIntakeToHeight(800));
+			addSequential(new MoveDistance(400));
+			addSequential(new ElevateIntakeToHeight(600));
 			addSequential(new MoveRollersAuto(-1, 0.75));
 		}
 		else if(switchPosition == Position.RIGHT) {
@@ -108,8 +108,7 @@ public class Auton extends CommandGroup {
 			addSequential(new MoveDistance(800));
 			addSequential(new TurnAngle(-0.75, -40));
 			addSequential(new MoveDistance(400));
-			addSequential(new ActuateIntake());
-			addSequential(new ElevateIntakeToHeight(800));
+			addSequential(new ElevateIntakeToHeight(600));
 			addSequential(new MoveRollersAuto(-1, 0.75));
 		}
 	}
@@ -123,20 +122,20 @@ public class Auton extends CommandGroup {
 		else if(switchPosition == Position.RIGHT)
 			addSequential(new TurnAngle(-0.75, -50));
 		addSequential(new MoveDistance(100));
-		addSequential(new ElevateIntakeToHeight(800));
+		addSequential(new ElevateIntakeToHeight(600));
 		addSequential(new MoveRollersAuto(-1, 1.0));
 	}
 	
 	private void scaleFromSide(Position scalePosition) {
 		addSequential(new ActuateIntake());
-		addSequential(new MoveDistance(5600));
+		addSequential(new StayStraightGyro(5600));
 		if(scalePosition == Position.LEFT) {
 			addSequential(new TurnAngle(0.75, 48));
 			addSequential(new MoveDistance(-140));
 		}
 		else if(scalePosition == Position.RIGHT) {
 			addSequential(new TurnAngle(-0.75, -48));
-			addSequential(new MoveDistance(-100));
+			addSequential(new MoveDistance(-140));
 		}
 		addSequential(new ElevateIntakeToHeight(0.8, 1650));
 		addSequential(new MoveDistance(200));

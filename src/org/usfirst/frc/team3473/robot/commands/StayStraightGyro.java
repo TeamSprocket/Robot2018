@@ -36,15 +36,13 @@ public class StayStraightGyro extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {	
 		double currentAngle = RobotMap.gyro.getAngle();
-		rightSpeed += (kP * currentAngle);
-		leftSpeed -= (kP * currentAngle);
 //		if(currentAngle > 0) {
 //			rightSpeed += (kP * currentAngle);
 //		}
 //		else if(currentAngle < 0) {
 //			leftSpeed -= (kP * currentAngle);
 //		}
-		Robot.drivetrain.tankDrive(leftSpeed, rightSpeed);
+		Robot.drivetrain.tankDrive(leftSpeed - kP * currentAngle, rightSpeed + kP * currentAngle);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
