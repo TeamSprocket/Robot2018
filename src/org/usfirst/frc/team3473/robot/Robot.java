@@ -17,6 +17,8 @@ import org.usfirst.frc.team3473.robot.subsystems.Intake;
 import org.usfirst.frc.team3473.robot.subsystems.IntakeActuation;
 import org.usfirst.frc.team3473.robot.subsystems.IntakeElevator;
 
+import edu.wpi.cscore.AxisCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -60,11 +62,16 @@ public class Robot extends TimedRobot {
 		chooser = new SendableChooser<>();
 		chooser.addObject("Baseline only", Auton.Mode.BASELINE);
 		chooser.addObject("Move forward switch", Auton.Mode.SWITCH_ONLY);
-		chooser.addDefault("Switch Priority", Auton.Mode.SWITCH_PRIORITY);
+		chooser.addObject("Switch Priority", Auton.Mode.SWITCH_PRIORITY);
 		chooser.addObject("Scale Priority", Auton.Mode.SCALE_PRIORITY);
+		chooser.addDefault("Experimental", Auton.Mode.EXPERIMENTAL);
 		SmartDashboard.putData("Auto Mode", chooser);
 		
 		SmartDashboard.putData("Gyro", RobotMap.gyro);
+		
+//		CameraServer cameraServer = CameraServer.getInstance();
+//		AxisCamera camera = cameraServer.addAxisCamera("10.34.73.67");
+//		cameraServer.startAutomaticCapture(camera);
 	}
 
 	/**
