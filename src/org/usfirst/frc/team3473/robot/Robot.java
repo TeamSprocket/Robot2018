@@ -32,7 +32,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-
+	
 	public static Drivetrain drivetrain = new Drivetrain();
 	public static Intake intake = new Intake();
 	public static IntakeElevator intakeElevator = new IntakeElevator();
@@ -50,6 +50,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		CameraServer.getInstance().addAxisCamera("10.34.73.67");
 		RobotMap.gyro.calibrate();
 		RobotMap.leftEncoder.reset();
 		RobotMap.rightEncoder.reset();
