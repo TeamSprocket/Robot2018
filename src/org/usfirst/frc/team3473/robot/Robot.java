@@ -52,7 +52,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		CameraServer.getInstance().addAxisCamera("10.34.73.67");
 		RobotMap.gyro.calibrate();
 		RobotMap.leftEncoder.reset();
 		RobotMap.rightEncoder.reset();
