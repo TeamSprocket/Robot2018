@@ -17,8 +17,6 @@ import org.usfirst.frc.team3473.robot.subsystems.Intake;
 import org.usfirst.frc.team3473.robot.subsystems.IntakeActuation;
 import org.usfirst.frc.team3473.robot.subsystems.IntakeElevator;
 
-import edu.wpi.cscore.AxisCamera;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;

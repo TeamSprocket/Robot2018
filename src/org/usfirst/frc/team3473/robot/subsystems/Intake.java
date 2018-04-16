@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3473.robot.subsystems;
 
-import org.usfirst.frc.team3473.robot.OI;
 import org.usfirst.frc.team3473.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
