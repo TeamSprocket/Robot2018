@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj.command.Command;
  *	encoder reaches a certain value.
  */
 public class MoveDistance extends Command {
+	private static boolean leftEncoderWorking = true;
+	private static boolean rightEncoderWorking = true;
+	
 	private static final double DEFAULT_SPEED = 0.5;
 	private double speed;
 	private double targetDistance;
@@ -34,12 +37,44 @@ public class MoveDistance extends Command {
 	}
 
 	protected boolean isFinished() {
-		double averageDistance = Math.abs(RobotMap.leftEncoder.getDistance()
-				+ RobotMap.rightEncoder.getDistance()) / 2.0;
-		return averageDistance >= Math.abs(targetDistance);
-//		return RobotMap.leftEncoder.getDistance() >= targetDistance;
+		double leftDistance = RobotMap.leftEncoder.getDistance();
+		double rightDistance = RobotMap.rightEncoder.getDistance();
+		double robotDistance;
+		if(leftEncoderWorking && rightEncoderWorking) {
+			robotDistance = Math.abs(leftDistance + rightDistance) / 2.0;
+			if(leftDistance >= 500 && rightDistance <= 5.0) {
+				rightEncoderWorking = false;
+			}
+			else if(rightDistance >= 500 && leftDistance <= 5.0) {
+				leftEncoderWorking = false;
+			}
+		}
+		else if(!leftEncoderWorking) {
+			robotDistance = Math.abs(rightDistance);
+		}
+		else {
+			robotDistance = Math.abs(leftDistance);
+		}
+		return robotDistance >= Math.abs(targetDistance);
+	}
+	
+	public static boolean isLeftEncoderWorking() {
+		return leftEncoderWorking;
+	}
+	
+	public static boolean isRightEncoderWorking() {
+		return rightEncoderWorking;
 	}
 
+	protected static void setLeftEncoderWorking(boolean newValue) {
+		leftEncoderWorking = newValue;
+	}
+	
+	protected static void setRightEncoderWorking(boolean newValue) {
+		rightEncoderWorking = newValue;
+	}
+	
+	
 	protected void end() {
 		Robot.drivetrain.arcadeDrive(0.0, 0.0);
 	}

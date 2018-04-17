@@ -26,39 +26,43 @@ public class StayStraightGyro extends Command {
 		targetDistance = Math.abs(distance);
 	}
 
-	// Called just before this Command runs the first time
 	protected void initialize() {
 		RobotMap.gyro.reset();
 		RobotMap.leftEncoder.reset();
 		RobotMap.rightEncoder.reset();
 	}
 
-	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {	
 		double currentAngle = RobotMap.gyro.getAngle();
-//		if(currentAngle > 0) {
-//			rightSpeed += (kP * currentAngle);
-//		}
-//		else if(currentAngle < 0) {
-//			leftSpeed -= (kP * currentAngle);
-//		}
 		Robot.drivetrain.tankDrive(leftSpeed - kP * currentAngle, rightSpeed + kP * currentAngle);
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		double averageDistance = Math.abs(RobotMap.leftEncoder.getDistance()
-				+ RobotMap.rightEncoder.getDistance()) / 2.0;
-		return averageDistance >= targetDistance;
+		double leftDistance = RobotMap.leftEncoder.getDistance();
+		double rightDistance = RobotMap.rightEncoder.getDistance();
+		double robotDistance;
+		if(MoveDistance.isLeftEncoderWorking() && MoveDistance.isRightEncoderWorking()) {
+			robotDistance = Math.abs(leftDistance + rightDistance) / 2.0;
+			if(leftDistance >= 500 && rightDistance <= 5.0) {
+				MoveDistance.setRightEncoderWorking(false);
+			}
+			else if(rightDistance >= 500 && leftDistance <= 5.0) {
+				MoveDistance.setLeftEncoderWorking(false);
+			}
+		}
+		else if(!MoveDistance.isLeftEncoderWorking()) {
+			robotDistance = Math.abs(rightDistance);
+		}
+		else {
+			robotDistance = Math.abs(leftDistance);
+		}
+		return robotDistance >= Math.abs(targetDistance);
 	}
 
-	// Called once after isFinished returns true
 	protected void end() {
 		Robot.drivetrain.tankDrive(0.0, 0.0);
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
 	protected void interrupted() {
 		end();
 	}
