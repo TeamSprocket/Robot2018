@@ -42,6 +42,7 @@ public class Robot extends TimedRobot {
 	public static MoveRollers moveRollers = new MoveRollers();
 
 	private Command autonomous;
+	private SendableChooser<Auton.Position> positionChooser;
 	private SendableChooser<Auton.Mode> chooser;
 
 	/**
@@ -57,12 +58,20 @@ public class Robot extends TimedRobot {
 		intake.setBrakeMode(true);
 //		intakeElevator.setBrakeMode(true);
 		
+		positionChooser = new SendableChooser<>();
+		positionChooser.addObject("Left", Auton.Position.LEFT);
+		positionChooser.addObject("Center", Auton.Position.CENTER);
+		positionChooser.addObject("Right", Auton.Position.RIGHT);
+		
 		chooser = new SendableChooser<>();
 		chooser.addObject("Baseline only", Auton.Mode.BASELINE);
 		chooser.addObject("Move forward switch", Auton.Mode.SWITCH_ONLY);
 		chooser.addObject("Switch Priority", Auton.Mode.SWITCH_PRIORITY);
 		chooser.addObject("Scale Priority", Auton.Mode.SCALE_PRIORITY);
 		chooser.addDefault("Experimental", Auton.Mode.EXPERIMENTAL);
+		chooser.addObject("Switch Side ONLY", Auton.Mode.SWITCH_SIDE_ONLY);
+		chooser.addObject("Scale Side ONLY", Auton.Mode.SCALE_SIDE_ONLY);
+		chooser.addObject("CENTER", Auton.Mode.CENTER);
 		SmartDashboard.putData("Auto Mode", chooser);
 		
 		SmartDashboard.putData("Gyro", RobotMap.gyro);

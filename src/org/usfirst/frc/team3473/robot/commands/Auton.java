@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class Auton extends CommandGroup {
 	public enum Position {LEFT, CENTER, RIGHT}
-	public enum Mode {BASELINE, SWITCH_ONLY, SWITCH_PRIORITY, SCALE_PRIORITY, EXPERIMENTAL}
+	public enum Mode {BASELINE, SWITCH_ONLY, SWITCH_PRIORITY, SCALE_PRIORITY, EXPERIMENTAL, SWITCH_SIDE_ONLY, SCALE_SIDE_ONLY, CENTER}
 	
 
 	public Auton(Position robotPosition, Mode mode, Position switchPosition, Position scalePosition) {
@@ -18,10 +18,19 @@ public class Auton extends CommandGroup {
 			simpleSwitchMode(robotPosition, switchPosition, scalePosition);
 		}
 		else if(mode == Mode.SWITCH_PRIORITY) {
-			switchMode(robotPosition, switchPosition, scalePosition);
+			switchMode(robotPosition, switchPosition, scalePosition, false);
 		}
 		else if(mode == Mode.SCALE_PRIORITY) {
-			scaleMode(robotPosition, switchPosition, scalePosition);
+			scaleMode(robotPosition, switchPosition, scalePosition, false);
+		}
+		else if(mode == Mode.SWITCH_SIDE_ONLY) {
+			switchMode(robotPosition, switchPosition, scalePosition, true);
+		}
+		else if(mode == Mode.SCALE_SIDE_ONLY) {
+			scaleMode(robotPosition, switchPosition, scalePosition, true);
+		}
+		else if(mode == Mode.CENTER) {
+			switchFromCenter(switchPosition);
 		}
 		else if(mode == Mode.EXPERIMENTAL) {
 			experimentalMode(robotPosition, switchPosition, scalePosition);
@@ -32,18 +41,31 @@ public class Auton extends CommandGroup {
 		addSequential(new MoveDistance(1000));
 	}
 	
-	private void switchMode(Position robotPosition, Position switchPosition, Position scalePosition) {
-		if(robotPosition == Position.CENTER) {
-			switchFromCenter(switchPosition);
-		}
-		else if(robotPosition == switchPosition) {
-			switchFromSide(switchPosition);
-		}
-		else if(robotPosition == scalePosition) {
-			scaleFromSide(scalePosition);
+	private void switchMode(Position robotPosition, Position switchPosition, Position scalePosition, boolean exclusive) {
+		if(exclusive == true) {
+			if(robotPosition == Position.CENTER) {
+				switchFromCenter(switchPosition);
+			}
+			else if (robotPosition == switchPosition) {
+				switchFromSide(switchPosition);
+			}
+			else {
+				crossBaseline();
+			}
 		}
 		else {
-			crossBaseline();
+			if(robotPosition == Position.CENTER) {
+				switchFromCenter(switchPosition);
+			}
+			else if(robotPosition == switchPosition) {
+				switchFromSide(switchPosition);
+			}
+			else if(robotPosition == scalePosition) {
+				scaleFromSide(scalePosition);
+			}
+			else {
+				crossBaseline();
+			}
 		}
 	}
 	
@@ -59,18 +81,31 @@ public class Auton extends CommandGroup {
 		}
 	}
 	
-	private void scaleMode(Position robotPosition, Position switchPosition, Position scalePosition) {
-		if(robotPosition == Position.CENTER) {
-			switchFromCenter(switchPosition);
-		}
-		else if(robotPosition == scalePosition) {
-			scaleFromSide(scalePosition);
-		}
-		else if(robotPosition == switchPosition) {
-			switchFromSide(switchPosition);
+	private void scaleMode(Position robotPosition, Position switchPosition, Position scalePosition, boolean exclusive) {
+		if(exclusive == true) {
+			if(robotPosition == Position.CENTER) {
+				switchFromCenter(switchPosition);
+			}
+			else if(robotPosition == scalePosition) {
+				scaleFromSide(scalePosition);
+			}
+			else {
+				crossBaseline();
+			}
 		}
 		else {
-			crossBaseline();
+			if(robotPosition == Position.CENTER) {
+				switchFromCenter(switchPosition);
+			}
+			else if(robotPosition == scalePosition) {
+				scaleFromSide(scalePosition);
+			}
+			else if(robotPosition == switchPosition) {
+				switchFromSide(switchPosition);
+			}
+			else {
+				crossBaseline();
+			}
 		}
 	}
 	
@@ -101,7 +136,7 @@ public class Auton extends CommandGroup {
 			}
 		}
 		else if(robotPosition == Position.RIGHT) {
-			switchMode(robotPosition, switchPosition, scalePosition);
+			//switchMode(robotPosition, switchPosition, scalePosition);
 		}
 		else {
 			crossBaseline();
@@ -137,7 +172,7 @@ public class Auton extends CommandGroup {
 			addSequential(new MoveDistance(800));
 			addSequential(new TurnAngle(0.75, 46));
 			addSequential(new MoveDistance(400));
-			addSequential(new ElevateIntakeToHeight(600));
+			addSequential(new ElevateIntakeToHeight(900));
 			addSequential(new MoveRollersAuto(-1, 0.75));
 		}
 		else if(switchPosition == Position.RIGHT) {
@@ -145,7 +180,7 @@ public class Auton extends CommandGroup {
 			addSequential(new MoveDistance(800));
 			addSequential(new TurnAngle(-0.75, -46));
 			addSequential(new MoveDistance(400));
-			addSequential(new ElevateIntakeToHeight(600));
+			addSequential(new ElevateIntakeToHeight(900));
 			addSequential(new MoveRollersAuto(-1, 0.75));
 		}
 	}
@@ -159,14 +194,14 @@ public class Auton extends CommandGroup {
 		else if(switchPosition == Position.RIGHT)
 			addSequential(new TurnAngle(-0.75, -52));
 		addSequential(new MoveDistance(200));
-		addSequential(new ElevateIntakeToHeight(600));
+		addSequential(new ElevateIntakeToHeight(900));
 		addSequential(new MoveRollersAuto(-1, 1.0));
 	}
 	
 	// Move forward, turn 90 degrees, lift elevator to scale, drop cube
 	private void scaleFromSide(Position scalePosition) {
 		addSequential(new ActuateIntake());
-		addSequential(new StayStraightGyro(5600));
+		addSequential(new StayStraightGyro(5200));
 		if(scalePosition == Position.LEFT) {
 			addSequential(new TurnAngle(0.75, 48));
 			addSequential(new MoveDistance(-140));
@@ -176,9 +211,9 @@ public class Auton extends CommandGroup {
 			addSequential(new MoveDistance(-140));
 		}
 		addSequential(new ElevateIntakeToHeight(0.8, 1650));
-		addParallel(new MoveRollersAuto(-1, 0.75));
-		addSequential(new MoveDistance(200));
-		addSequential(new MoveDistance(-200));
+		addSequential(new MoveDistance(320));//was 200
+		addSequential(new MoveRollersAuto(-1, 0.75));
+		addSequential(new MoveDistance(-320));//was also 200
 		addSequential(new ElevateIntakeToHeight(-0.8, 300));
 	}
 	
