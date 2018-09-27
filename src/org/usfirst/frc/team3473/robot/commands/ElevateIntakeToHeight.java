@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ElevateIntakeToHeight extends Command {
 	private static final double DEFAULT_SPEED = 1.0;
-	
+	private static final double TIME = 4.0;
 	private long startingTime;
 
 	private double elevatorSpeed;
@@ -24,6 +24,7 @@ public class ElevateIntakeToHeight extends Command {
 	 */
 	public ElevateIntakeToHeight(double target) {
 		this(DEFAULT_SPEED, target);
+		setTimeout(TIME);
 	}
 
 	/**
@@ -37,8 +38,10 @@ public class ElevateIntakeToHeight extends Command {
 		requires(Robot.intakeElevator);
 		this.elevatorSpeed = elevatorSpeed;
 		position = target;
+		setTimeout(TIME);
 	}
 
+	@Override
 	protected void initialize() {
 		Robot.intakeElevator.initializeCounter();
 		startingTime = System.currentTimeMillis();
@@ -50,6 +53,7 @@ public class ElevateIntakeToHeight extends Command {
 		}
 	}
 
+	@Override
 	protected void execute() {
 		Robot.intakeElevator.moveElevator(elevatorSpeed);
 	}
@@ -57,6 +61,7 @@ public class ElevateIntakeToHeight extends Command {
 	// This method assumes that the encoder is positioned such that raising the
 	// elevator will cause the encoder value to increase, while lowering the
 	// elevator will cause the encoder value to decrease.
+	@Override
 	protected boolean isFinished() {
 		if(elevatorSpeed > 0.0 && (Robot.intakeElevator.isSwitchSet() || RobotMap.intakeElevatorEncoder.getDistance() > position)) {
 			return true;
@@ -64,14 +69,16 @@ public class ElevateIntakeToHeight extends Command {
 		else if(elevatorSpeed < 0.0 && RobotMap.intakeElevatorEncoder.getDistance() < position) {
 			return true;
 		}
-		return false;
+		return isTimedOut();
 	}
 
+	@Override
 	protected void end() {
 		Robot.intakeElevator.moveElevator(0.0);
 		System.out.println(System.currentTimeMillis() - startingTime);
 	}
 
+	@Override
 	protected void interrupted() {
 		end();
 	}
