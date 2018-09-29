@@ -8,7 +8,21 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutonTime extends CommandGroup {
 	public enum Position {LEFT, CENTER, RIGHT}
 	public enum Mode {BASELINE, SWITCH_ONLY, SWITCH_PRIORITY, SCALE_PRIORITY, EXPERIMENTAL, SWITCH_SIDE_ONLY, SCALE_SIDE_ONLY, CENTER}
+
 	public static final double baselineTime = 0;
+	public static final double sideSwitchLongTime = 0;
+	public static final double sideSwitchShortTime = 0;
+	public static final double frontSwitchTime = 0;
+	public static final double centerSwitch1 = 0;
+	public static final double centerSwitch2 = 0;
+	public static final double centerSwitch3 = 0;
+	
+	public static final double scaleLongTime = 0;
+	
+	public static final double rightTurnTime = 0;
+	
+	public static final double switchHeightTime = 0;
+	public static final double scaleHeightTime = 0;
 
 	public AutonTime(Position robotPosition, Mode mode, Position switchPosition, Position scalePosition) {
 		if(mode == Mode.BASELINE) {
