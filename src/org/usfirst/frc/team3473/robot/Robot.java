@@ -11,6 +11,7 @@ import org.usfirst.frc.team3473.robot.commands.ActuateIntake;
 import org.usfirst.frc.team3473.robot.commands.Auton;
 import org.usfirst.frc.team3473.robot.commands.GearToggle;
 import org.usfirst.frc.team3473.robot.commands.MoveRollers;
+import org.usfirst.frc.team3473.robot.commands.MoveTime;
 import org.usfirst.frc.team3473.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3473.robot.subsystems.GearPneumatics;
 import org.usfirst.frc.team3473.robot.subsystems.Intake;
@@ -20,6 +21,7 @@ import org.usfirst.frc.team3473.robot.subsystems.IntakeElevator;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -110,27 +112,30 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		Auton.Position robotPosition;
-		if(OI.leftJoystick.getRawAxis(3) > 0.33)
-			robotPosition = Auton.Position.RIGHT;
-		else if(OI.leftJoystick.getRawAxis(3) >= -0.33)
-			robotPosition = Auton.Position.CENTER;
-		else
-			robotPosition = Auton.Position.LEFT;
-		
-		
-		Auton.Mode autonMode = chooser.getSelected();
-		
-		SmartDashboard.putString("Starting Position", robotPosition.toString());
-		SmartDashboard.putString("Auton Mode", autonMode.toString());
-		
-		String gameData = DriverStation.getInstance().getGameSpecificMessage();
-		SmartDashboard.putString("Game Data", gameData);
-
-		Auton.Position switchPosition = Auton.getPositionFromChar(gameData.charAt(0));
-		Auton.Position scalePosition = Auton.getPositionFromChar(gameData.charAt(1));
-		autonomous = new Auton(robotPosition, autonMode, switchPosition, scalePosition);
-		autonomous.start();
+//		Auton.Position robotPosition;
+//		if(OI.leftJoystick.getRawAxis(3) > 0.33)
+//			robotPosition = Auton.Position.RIGHT;
+//		else if(OI.leftJoystick.getRawAxis(3) >= -0.33)
+//			robotPosition = Auton.Position.CENTER;
+//		else
+//			robotPosition = Auton.Position.LEFT;
+//		
+//		
+//		Auton.Mode autonMode = chooser.getSelected();
+//		
+//		SmartDashboard.putString("Starting Position", robotPosition.toString());
+//		SmartDashboard.putString("Auton Mode", autonMode.toString());
+//		
+//		String gameData = DriverStation.getInstance().getGameSpecificMessage();
+//		SmartDashboard.putString("Game Data", gameData);
+//
+//		Auton.Position switchPosition = Auton.getPositionFromChar(gameData.charAt(0));
+//		Auton.Position scalePosition = Auton.getPositionFromChar(gameData.charAt(1));
+//		autonomous = new Auton(robotPosition, autonMode, switchPosition, scalePosition);
+//		autonomous.start();
+		CommandGroup testAuton = new CommandGroup();
+		testAuton.addSequential(new MoveTime(2.5));
+		testAuton.start();
 	}
 
 	/**
