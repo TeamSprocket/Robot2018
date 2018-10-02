@@ -13,7 +13,7 @@ public class StayStraightGyro extends Command {
 	private double targetDistance;
 	private double rightSpeed;
 	private double leftSpeed;
-	private double kP = 0.03;
+	private double kP = 0.01;
 
 	public StayStraightGyro(double distance) {
 		this(Math.signum(distance) * DEFAULT_SPEED, distance);
@@ -23,7 +23,8 @@ public class StayStraightGyro extends Command {
 		requires(Robot.drivetrain);
 		rightSpeed = speed;
 		leftSpeed = speed;
-		targetDistance = Math.abs(distance);
+//		targetDistance = Math.abs(distance);
+		setTimeout(distance);
 	}
 
 	protected void initialize() {
@@ -34,6 +35,9 @@ public class StayStraightGyro extends Command {
 
 	protected void execute() {	
 		double currentAngle = RobotMap.gyro.getAngle();
+		if(currentAngle > 180) {
+			currentAngle = 360 - currentAngle;
+		}
 		Robot.drivetrain.tankDrive(leftSpeed - kP * currentAngle, rightSpeed + kP * currentAngle);
 	}
 
@@ -41,22 +45,23 @@ public class StayStraightGyro extends Command {
 		double leftDistance = RobotMap.leftEncoder.getDistance();
 		double rightDistance = RobotMap.rightEncoder.getDistance();
 		double robotDistance;
-		if(MoveDistance.isLeftEncoderWorking() && MoveDistance.isRightEncoderWorking()) {
-			robotDistance = Math.abs(leftDistance + rightDistance) / 2.0;
-			if(leftDistance >= 500 && rightDistance <= 5.0) {
-				MoveDistance.setRightEncoderWorking(false);
-			}
-			else if(rightDistance >= 500 && leftDistance <= 5.0) {
-				MoveDistance.setLeftEncoderWorking(false);
-			}
-		}
-		else if(!MoveDistance.isLeftEncoderWorking()) {
-			robotDistance = Math.abs(rightDistance);
-		}
-		else {
-			robotDistance = Math.abs(leftDistance);
-		}
-		return robotDistance >= Math.abs(targetDistance);
+//		if(MoveDistance.isLeftEncoderWorking() && MoveDistance.isRightEncoderWorking()) {
+//			robotDistance = Math.abs(leftDistance + rightDistance) / 2.0;
+//			if(leftDistance >= 500 && rightDistance <= 5.0) {
+//				MoveDistance.setRightEncoderWorking(false);
+//			}
+//			else if(rightDistance >= 500 && leftDistance <= 5.0) {
+//				MoveDistance.setLeftEncoderWorking(false);
+//			}
+//		}
+//		else if(!MoveDistance.isLeftEncoderWorking()) {
+//			robotDistance = Math.abs(rightDistance);
+//		}
+//		else {
+//			robotDistance = Math.abs(leftDistance);
+//		}
+//		return robotDistance >= Math.abs(targetDistance);
+		return isTimedOut();
 	}
 
 	protected void end() {

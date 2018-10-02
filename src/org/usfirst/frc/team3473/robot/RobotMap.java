@@ -10,6 +10,7 @@ package org.usfirst.frc.team3473.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
@@ -42,6 +43,7 @@ public class RobotMap {
 	public static Encoder rightEncoder = new Encoder(4, 5, true);
 	public static Encoder intakeElevatorEncoder = new Encoder(2, 3, true);
 	public static ADXRS450_Gyro gyro = new InvertedGyro();
+//	public static AnalogGyro gyro = new AnalogGyro(0);
 	public static DigitalInput limitSwitch = new DigitalInput(6);
 	
 	// This subclass reverses the direction of a gyro

@@ -9,9 +9,11 @@ package org.usfirst.frc.team3473.robot;
 
 import org.usfirst.frc.team3473.robot.commands.ActuateIntake;
 import org.usfirst.frc.team3473.robot.commands.Auton;
+import org.usfirst.frc.team3473.robot.commands.ElevateIntakeToTime;
 import org.usfirst.frc.team3473.robot.commands.GearToggle;
 import org.usfirst.frc.team3473.robot.commands.MoveRollers;
 import org.usfirst.frc.team3473.robot.commands.MoveTime;
+import org.usfirst.frc.team3473.robot.commands.StayStraightGyro;
 import org.usfirst.frc.team3473.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3473.robot.subsystems.GearPneumatics;
 import org.usfirst.frc.team3473.robot.subsystems.Intake;
@@ -75,8 +77,11 @@ public class Robot extends TimedRobot {
 		chooser.addObject("Scale Side ONLY", Auton.Mode.SCALE_SIDE_ONLY);
 		chooser.addObject("CENTER", Auton.Mode.CENTER);
 		SmartDashboard.putData("Auto Mode", chooser);
-		
+
 		SmartDashboard.putData("Gyro", RobotMap.gyro);
+		
+		SmartDashboard.putNumber("Time", 2);
+	
 		
 //		CameraServer cameraServer = CameraServer.getInstance();
 //		AxisCamera camera = cameraServer.addAxisCamera("10.34.73.67");
@@ -90,7 +95,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		Robot.drivetrain.setBrakeMode(false);
 	}
 
 	@Override
@@ -133,9 +138,11 @@ public class Robot extends TimedRobot {
 //		Auton.Position scalePosition = Auton.getPositionFromChar(gameData.charAt(1));
 //		autonomous = new Auton(robotPosition, autonMode, switchPosition, scalePosition);
 //		autonomous.start();
+		Robot.drivetrain.setBrakeMode(true);
 		CommandGroup testAuton = new CommandGroup();
-		testAuton.addSequential(new MoveTime(2.5));
+		testAuton.addSequential(new ElevateIntakeToTime(SmartDashboard.getNumber("Time", 0.0)));
 		testAuton.start();
+		
 	}
 
 	/**
