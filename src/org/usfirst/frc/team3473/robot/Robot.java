@@ -16,6 +16,7 @@ import org.usfirst.frc.team3473.robot.subsystems.GearPneumatics;
 import org.usfirst.frc.team3473.robot.subsystems.Intake;
 import org.usfirst.frc.team3473.robot.subsystems.IntakeActuation;
 import org.usfirst.frc.team3473.robot.subsystems.IntakeElevator;
+import org.usfirst.frc.team3473.robot.subsystems.Sensors;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -38,6 +39,7 @@ public class Robot extends TimedRobot {
 	public static IntakeElevator intakeElevator = new IntakeElevator();
 	public static IntakeActuation intakeActuation = new IntakeActuation();
 	public static GearPneumatics gearPneumatics = new GearPneumatics();
+	public static Sensors sensors = new Sensors();
 	
 	public static MoveRollers moveRollers = new MoveRollers();
 
@@ -51,10 +53,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		RobotMap.gyro.calibrate();
-		RobotMap.leftEncoder.reset();
-		RobotMap.rightEncoder.reset();
-		RobotMap.intakeElevatorEncoder.reset();
+		sensors.resetAll();
 		intake.setBrakeMode(true);
 //		intakeElevator.setBrakeMode(true);
 		
