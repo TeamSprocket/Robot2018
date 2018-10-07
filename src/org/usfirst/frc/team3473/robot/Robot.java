@@ -14,6 +14,9 @@ import org.usfirst.frc.team3473.robot.commands.GearToggle;
 import org.usfirst.frc.team3473.robot.commands.MoveRollers;
 import org.usfirst.frc.team3473.robot.commands.MoveTime;
 import org.usfirst.frc.team3473.robot.commands.StayStraightGyro;
+import org.usfirst.frc.team3473.robot.commands.TurnAngle;
+import org.usfirst.frc.team3473.robot.commands.TurnAngleExperimental;
+import org.usfirst.frc.team3473.robot.commands.TurnAngleP;
 import org.usfirst.frc.team3473.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3473.robot.subsystems.GearPneumatics;
 import org.usfirst.frc.team3473.robot.subsystems.Intake;
@@ -80,7 +83,8 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putData("Gyro", RobotMap.gyro);
 		
-		SmartDashboard.putNumber("Time", 2);
+		SmartDashboard.putNumber("kP", 0.01);
+		SmartDashboard.putNumber("kI", 0.01);
 	
 		
 //		CameraServer cameraServer = CameraServer.getInstance();
@@ -140,7 +144,7 @@ public class Robot extends TimedRobot {
 //		autonomous.start();
 		Robot.drivetrain.setBrakeMode(true);
 		CommandGroup testAuton = new CommandGroup();
-		testAuton.addSequential(new ElevateIntakeToTime(SmartDashboard.getNumber("Time", 0.0)));
+		testAuton.addSequential(new StayStraightGyro(2.5));
 		testAuton.start();
 		
 	}
@@ -173,7 +177,7 @@ public class Robot extends TimedRobot {
 //		OI.ratchetWrenchToggle.whenPressed(new WrenchToggle());
 		OI.changeGearButton.whenPressed(new GearToggle());
 		
-//		RobotMap.gyro.reset();
+		RobotMap.gyro.reset();
 	}
 
 	/**

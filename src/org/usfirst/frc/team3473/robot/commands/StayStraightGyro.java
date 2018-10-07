@@ -13,7 +13,7 @@ public class StayStraightGyro extends Command {
 	private double targetDistance;
 	private double rightSpeed;
 	private double leftSpeed;
-	private double kP = 0.01;
+	private double kP = 0.03;
 
 	public StayStraightGyro(double distance) {
 		this(Math.signum(distance) * DEFAULT_SPEED, distance);
@@ -35,10 +35,10 @@ public class StayStraightGyro extends Command {
 
 	protected void execute() {	
 		double currentAngle = RobotMap.gyro.getAngle();
-		if(currentAngle > 180) {
-			currentAngle = 360 - currentAngle;
-		}
-		Robot.drivetrain.tankDrive(leftSpeed - kP * currentAngle, rightSpeed + kP * currentAngle);
+//		if(currentAngle > 180) {
+//			currentAngle = 360 - currentAngle;
+//		}
+		Robot.drivetrain.tankDrive(leftSpeed + kP * currentAngle, rightSpeed - kP * currentAngle);
 	}
 
 	protected boolean isFinished() {

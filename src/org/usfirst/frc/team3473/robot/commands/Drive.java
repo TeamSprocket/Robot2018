@@ -25,6 +25,8 @@ public class Drive extends Command {
 		if(Math.abs(turn) < 0.1) turn = 0.0;
 
 		Robot.drivetrain.arcadeDrive(speed, turn);
+		
+//		Robot.drivetrain.tankDrive(OI.leftJoystick.getY(), OI.rightJoystick.getY());
 	}
 
 	protected boolean isFinished() {

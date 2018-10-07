@@ -23,14 +23,15 @@ public class ElevateIntake extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		boolean limitReached = RobotMap.limitSwitch.get();
-		if(OI.raiseIntakeButton.get() && limitReached){
-			Robot.intakeElevator.moveElevator(0.0);
-		}
-		else if(OI.raiseIntakeButton.get()) {
-			Robot.intakeElevator.moveElevator(1.0);
+//		if(OI.raiseIntakeButton.get() && limitReached){
+//			Robot.intakeElevator.moveElevator(0.0);
+//		}
+//		else 
+		if(OI.raiseIntakeButton.get()) {
+			Robot.intakeElevator.moveElevator(-1.0);
 		}
 		else if(OI.lowerIntakeButton.get()) {
-			Robot.intakeElevator.moveElevator(-0.4);
+			Robot.intakeElevator.moveElevator(0.4);
 		}
 		else {
 			Robot.intakeElevator.moveElevator(0.0);
