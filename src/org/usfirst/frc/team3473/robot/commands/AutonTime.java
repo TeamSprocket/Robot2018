@@ -52,7 +52,7 @@ public class AutonTime extends CommandGroup {
 	}
 	
 	private void crossBaseline() {
-		addSequential(new MoveTime(1000));
+		addSequential(new MoveTime(baselineTime));
 	}
 	
 	private void switchMode(Position robotPosition, Position switchPosition, Position scalePosition, boolean exclusive) {
@@ -131,7 +131,7 @@ public class AutonTime extends CommandGroup {
 			if(switchPosition == Position.LEFT) {
 				switchFromSide(switchPosition);
 				addSequential(new MoveTime(-100));
-				addParallel(new ElevateIntakeToHeight(-0.5, 100));
+				addParallel(new ElevateIntakeToTime(-0.5, 100));
 				addSequential(new TurnAnglePID(-85));
 				addSequential(new MoveTime(1300));
 				addSequential(new TurnAnglePID(50));
@@ -139,7 +139,7 @@ public class AutonTime extends CommandGroup {
 				addSequential(new TurnAnglePID(53));
 				addParallel(new MoveRollersAuto(1, 2.0));
 				addSequential(new MoveTime(0.3, 500));
-				addSequential(new ElevateIntakeToHeight(600));
+				addSequential(new ElevateIntakeToTime(600));
 				addSequential(new MoveRollersAuto(-1, 1.0));
 			}
 			else if(scalePosition == Position.LEFT) {
@@ -162,7 +162,7 @@ public class AutonTime extends CommandGroup {
 		addSequential(new ActuateIntake());
 		addSequential(new MoveTime(1100));
 		if(switchPosition == Position.LEFT) {
-			addSequential(new ElevateIntakeToHeight(800));
+			addSequential(new ElevateIntakeToTime(800));
 			addSequential(new MoveRollersAuto(-1, 2.0));
 		}
 	}
@@ -172,7 +172,7 @@ public class AutonTime extends CommandGroup {
 		addSequential(new ActuateIntake());
 		addSequential(new MoveTime(1100));
 		if(switchPosition == Position.RIGHT) {
-			addSequential(new ElevateIntakeToHeight(800));
+			addSequential(new ElevateIntakeToTime(800));
 			addSequential(new MoveRollersAuto(-1, 2.0));
 		}
 	}
@@ -182,19 +182,19 @@ public class AutonTime extends CommandGroup {
 		addSequential(new ActuateIntake());
 		addSequential(new MoveTime(400));
 		if(switchPosition == Position.LEFT) {
-			addSequential(new TurnAnglePID(-0.75, -46));
+//			addSequential(new TurnAnglePID(-0.75, -46));
 			addSequential(new MoveTime(800));
-			addSequential(new TurnAnglePID(0.75, 46));
+//			addSequential(new TurnAnglePID(0.75, 46));
 			addSequential(new MoveTime(400));
-			addSequential(new ElevateIntakeToHeight(900));
+			addSequential(new ElevateIntakeToTime(900));
 			addSequential(new MoveRollersAuto(-1, 0.75));
 		}
 		else if(switchPosition == Position.RIGHT) {
-			addSequential(new TurnAnglePID(0.75, 46));
+//			addSequential(new TurnAnglePID(0.75, 46));
 			addSequential(new MoveTime(800));
-			addSequential(new TurnAnglePID(-0.75, -46));
+//			addSequential(new TurnAnglePID(-0.75, -46));
 			addSequential(new MoveTime(400));
-			addSequential(new ElevateIntakeToHeight(900));
+			addSequential(new ElevateIntakeToTime(900));
 			addSequential(new MoveRollersAuto(-1, 0.75));
 		}
 	}
@@ -202,13 +202,13 @@ public class AutonTime extends CommandGroup {
 	// Move forward, turn 90 degrees, drop cube
 	private void switchFromSide(Position switchPosition) {
 		addSequential(new ActuateIntake());
-		addSequential(new StayStraightGyro(2400));
+		addSequential(new MoveTime(2.1));
 		if(switchPosition == Position.LEFT)
-			addSequential(new TurnAnglePID(0.75, 52));
+			addSequential(new TurnAnglePID(90));
 		else if(switchPosition == Position.RIGHT)
-			addSequential(new TurnAnglePID(-0.75, -52));
-		addSequential(new MoveTime(200));
-		addSequential(new ElevateIntakeToHeight(900));
+			addSequential(new TurnAnglePID(-90));
+		addSequential(new MoveTime(0.2));
+		addSequential(new ElevateIntakeToTime(1));
 		addSequential(new MoveRollersAuto(-1, 1.0));
 	}
 	
@@ -217,18 +217,18 @@ public class AutonTime extends CommandGroup {
 		addSequential(new ActuateIntake());
 		addSequential(new StayStraightGyro(5200));
 		if(scalePosition == Position.LEFT) {
-			addSequential(new TurnAnglePID(0.75, 48));
+//			addSequential(new TurnAnglePID(0.75, 48));
 			addSequential(new MoveTime(-140));
 		}
 		else if(scalePosition == Position.RIGHT) {
-			addSequential(new TurnAnglePID(-0.75, -48));
+//			addSequential(new TurnAnglePID(-0.75, -48));
 			addSequential(new MoveTime(-140));
 		}
-		addSequential(new ElevateIntakeToHeight(0.8, 1650));
+		addSequential(new ElevateIntakeToTime(0.8, 1650));
 		addSequential(new MoveTime(320));//was 200
 		addSequential(new MoveRollersAuto(-1, 0.75));
 		addSequential(new MoveTime(-320));//was also 200
-		addSequential(new ElevateIntakeToHeight(-0.8, 300));
+		addSequential(new ElevateIntakeToTime(-0.8, 300));
 	}
 	
 	/**

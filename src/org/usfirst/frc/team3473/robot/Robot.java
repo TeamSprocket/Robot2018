@@ -85,6 +85,7 @@ public class Robot extends TimedRobot {
 		
 		SmartDashboard.putNumber("kP", 0.01);
 		SmartDashboard.putNumber("kI", 0.01);
+		SmartDashboard.putNumber("kD", 1.0);
 	
 		
 //		CameraServer cameraServer = CameraServer.getInstance();

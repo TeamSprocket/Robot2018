@@ -15,7 +15,7 @@ public class TurnAnglePID extends PIDCommand {
 
 	// TODO: Tweak kP, kI, and kD values instead of counting passes
 	private static double kP = 1.0, kI = 1.0, kD = 1.0;
-	private static final int MINIMUM_PASSES = 100;
+	private static final int MINIMUM_PASSES = 5;
 
 	private boolean outputPositive = true;
 	private double passes;
@@ -30,6 +30,9 @@ public class TurnAnglePID extends PIDCommand {
 
 		// TODO: Make it accurate enough so that we don't actually need timeout
 		setTimeout(angle * 1.5 / 90.0);
+		
+		System.out.println(getPIDController().getSetpoint());
+		System.out.println(RobotMap.gyro.getAngle());
 	}
 
 	@Override
