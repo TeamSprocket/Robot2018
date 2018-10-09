@@ -4,6 +4,7 @@ import org.usfirst.frc.team3473.robot.Robot;
 import org.usfirst.frc.team3473.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Turns the robot to a specified angle using PID control through WPILib's
@@ -13,8 +14,8 @@ public class TurnAnglePID extends PIDCommand {
 	private static final double ANGLE_TOLERANCE = 1.0;
 
 	// TODO: Tweak kP, kI, and kD values instead of counting passes
-	private static final double kP = 1.0, kI = 1.0, kD = 1.0;
-	private static final int MINIMUM_PASSES = 6;
+	private static double kP = 1.0, kI = 1.0, kD = 1.0;
+	private static final int MINIMUM_PASSES = 100;
 
 	private boolean outputPositive = true;
 	private double passes;
@@ -34,6 +35,10 @@ public class TurnAnglePID extends PIDCommand {
 	@Override
 	protected void initialize() {
 		getPIDController().enable();
+		
+		kP = SmartDashboard.getNumber("kP", 1.0);
+		kI = SmartDashboard.getNumber("kI", 1.0);
+		kD = SmartDashboard.getNumber("kD", 1.0);
 	}
 
 	@Override

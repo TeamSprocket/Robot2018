@@ -120,7 +120,7 @@ public class Robot extends TimedRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	@Override
-	public void autonomousInit() {
+	public void autonomousInit() {		
 //		Auton.Position robotPosition;
 //		if(OI.leftJoystick.getRawAxis(3) > 0.33)
 //			robotPosition = Auton.Position.RIGHT;
@@ -142,11 +142,11 @@ public class Robot extends TimedRobot {
 //		Auton.Position scalePosition = Auton.getPositionFromChar(gameData.charAt(1));
 //		autonomous = new Auton(robotPosition, autonMode, switchPosition, scalePosition);
 //		autonomous.start();
+		
 		Robot.drivetrain.setBrakeMode(true);
 		CommandGroup testAuton = new CommandGroup();
-		testAuton.addSequential(new StayStraightGyro(2.5));
+		testAuton.addSequential(new TurnAnglePID(90));
 		testAuton.start();
-		
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class Robot extends TimedRobot {
 	}
 
 	@Override
-	public void teleopInit() {
+	public void teleopInit() {		
 		if(autonomous != null)
 			autonomous.cancel();
 		
@@ -168,6 +168,8 @@ public class Robot extends TimedRobot {
 		RobotMap.rightEncoder.reset();
 		RobotMap.gyro.reset();
 
+		Robot.drivetrain.setBrakeMode(false);
+		
 		moveRollers.start();
 //		OI.intakeButton.whenPressed(new MoveRollers(1));
 //		OI.intakeButton.whenReleased(new MoveRollers(0));

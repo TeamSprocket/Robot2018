@@ -52,7 +52,7 @@ public class AutonTime extends CommandGroup {
 	}
 	
 	private void crossBaseline() {
-		addSequential(new MoveDistance(1000));
+		addSequential(new MoveTime(1000));
 	}
 	
 	private void switchMode(Position robotPosition, Position switchPosition, Position scalePosition, boolean exclusive) {
@@ -130,15 +130,15 @@ public class AutonTime extends CommandGroup {
 		else if(robotPosition == Position.LEFT) {
 			if(switchPosition == Position.LEFT) {
 				switchFromSide(switchPosition);
-				addSequential(new MoveDistance(-100));
+				addSequential(new MoveTime(-100));
 				addParallel(new ElevateIntakeToHeight(-0.5, 100));
-				addSequential(new TurnAngle(-85));
-				addSequential(new MoveDistance(1300));
-				addSequential(new TurnAngle(50));
-				addSequential(new MoveDistance(260));
-				addSequential(new TurnAngle(53));
+				addSequential(new TurnAnglePID(-85));
+				addSequential(new MoveTime(1300));
+				addSequential(new TurnAnglePID(50));
+				addSequential(new MoveTime(260));
+				addSequential(new TurnAnglePID(53));
 				addParallel(new MoveRollersAuto(1, 2.0));
-				addSequential(new MoveDistance(0.3, 500));
+				addSequential(new MoveTime(0.3, 500));
 				addSequential(new ElevateIntakeToHeight(600));
 				addSequential(new MoveRollersAuto(-1, 1.0));
 			}
@@ -160,7 +160,7 @@ public class AutonTime extends CommandGroup {
 	// Drives forward and drops the cube (assumes robot is positioned directly in front of switch).
 	private void fromLeft(Position switchPosition, Position scalePosition) {
 		addSequential(new ActuateIntake());
-		addSequential(new MoveDistance(1100));
+		addSequential(new MoveTime(1100));
 		if(switchPosition == Position.LEFT) {
 			addSequential(new ElevateIntakeToHeight(800));
 			addSequential(new MoveRollersAuto(-1, 2.0));
@@ -170,7 +170,7 @@ public class AutonTime extends CommandGroup {
 	// Drives forward and drops the cube (assumes robot is positioned directly in front of switch).
 	private void fromRight(Position switchPosition, Position scalePosition) {
 		addSequential(new ActuateIntake());
-		addSequential(new MoveDistance(1100));
+		addSequential(new MoveTime(1100));
 		if(switchPosition == Position.RIGHT) {
 			addSequential(new ElevateIntakeToHeight(800));
 			addSequential(new MoveRollersAuto(-1, 2.0));
@@ -180,20 +180,20 @@ public class AutonTime extends CommandGroup {
 	// Drops a cube into either alliance plate
 	private void switchFromCenter(Position switchPosition) {
 		addSequential(new ActuateIntake());
-		addSequential(new MoveDistance(400));
+		addSequential(new MoveTime(400));
 		if(switchPosition == Position.LEFT) {
-			addSequential(new TurnAngle(-0.75, -46));
-			addSequential(new MoveDistance(800));
-			addSequential(new TurnAngle(0.75, 46));
-			addSequential(new MoveDistance(400));
+			addSequential(new TurnAnglePID(-0.75, -46));
+			addSequential(new MoveTime(800));
+			addSequential(new TurnAnglePID(0.75, 46));
+			addSequential(new MoveTime(400));
 			addSequential(new ElevateIntakeToHeight(900));
 			addSequential(new MoveRollersAuto(-1, 0.75));
 		}
 		else if(switchPosition == Position.RIGHT) {
-			addSequential(new TurnAngle(0.75, 46));
-			addSequential(new MoveDistance(800));
-			addSequential(new TurnAngle(-0.75, -46));
-			addSequential(new MoveDistance(400));
+			addSequential(new TurnAnglePID(0.75, 46));
+			addSequential(new MoveTime(800));
+			addSequential(new TurnAnglePID(-0.75, -46));
+			addSequential(new MoveTime(400));
 			addSequential(new ElevateIntakeToHeight(900));
 			addSequential(new MoveRollersAuto(-1, 0.75));
 		}
@@ -204,10 +204,10 @@ public class AutonTime extends CommandGroup {
 		addSequential(new ActuateIntake());
 		addSequential(new StayStraightGyro(2400));
 		if(switchPosition == Position.LEFT)
-			addSequential(new TurnAngle(0.75, 52));
+			addSequential(new TurnAnglePID(0.75, 52));
 		else if(switchPosition == Position.RIGHT)
-			addSequential(new TurnAngle(-0.75, -52));
-		addSequential(new MoveDistance(200));
+			addSequential(new TurnAnglePID(-0.75, -52));
+		addSequential(new MoveTime(200));
 		addSequential(new ElevateIntakeToHeight(900));
 		addSequential(new MoveRollersAuto(-1, 1.0));
 	}
@@ -217,17 +217,17 @@ public class AutonTime extends CommandGroup {
 		addSequential(new ActuateIntake());
 		addSequential(new StayStraightGyro(5200));
 		if(scalePosition == Position.LEFT) {
-			addSequential(new TurnAngle(0.75, 48));
-			addSequential(new MoveDistance(-140));
+			addSequential(new TurnAnglePID(0.75, 48));
+			addSequential(new MoveTime(-140));
 		}
 		else if(scalePosition == Position.RIGHT) {
-			addSequential(new TurnAngle(-0.75, -48));
-			addSequential(new MoveDistance(-140));
+			addSequential(new TurnAnglePID(-0.75, -48));
+			addSequential(new MoveTime(-140));
 		}
 		addSequential(new ElevateIntakeToHeight(0.8, 1650));
-		addSequential(new MoveDistance(320));//was 200
+		addSequential(new MoveTime(320));//was 200
 		addSequential(new MoveRollersAuto(-1, 0.75));
-		addSequential(new MoveDistance(-320));//was also 200
+		addSequential(new MoveTime(-320));//was also 200
 		addSequential(new ElevateIntakeToHeight(-0.8, 300));
 	}
 	
