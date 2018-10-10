@@ -12,6 +12,7 @@ import org.usfirst.frc.team3473.robot.commands.Auton;
 import org.usfirst.frc.team3473.robot.commands.ElevateIntakeToTime;
 import org.usfirst.frc.team3473.robot.commands.GearToggle;
 import org.usfirst.frc.team3473.robot.commands.MoveRollers;
+import org.usfirst.frc.team3473.robot.commands.MoveRollersAuto;
 import org.usfirst.frc.team3473.robot.commands.MoveTime;
 import org.usfirst.frc.team3473.robot.commands.StayStraightGyro;
 import org.usfirst.frc.team3473.robot.commands.TurnAngle;
@@ -83,8 +84,8 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putData("Gyro", RobotMap.gyro);
 		
-		SmartDashboard.putNumber("kP", 0.01);
-		SmartDashboard.putNumber("kI", 0.01);
+		SmartDashboard.putNumber("kP", 1.0);
+		SmartDashboard.putNumber("kI", 1.0);
 		SmartDashboard.putNumber("kD", 1.0);
 	
 		
@@ -121,33 +122,35 @@ public class Robot extends TimedRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	@Override
-	public void autonomousInit() {		
-//		Auton.Position robotPosition;
-//		if(OI.leftJoystick.getRawAxis(3) > 0.33)
-//			robotPosition = Auton.Position.RIGHT;
-//		else if(OI.leftJoystick.getRawAxis(3) >= -0.33)
-//			robotPosition = Auton.Position.CENTER;
-//		else
-//			robotPosition = Auton.Position.LEFT;
-//		
-//		
-//		Auton.Mode autonMode = chooser.getSelected();
-//		
-//		SmartDashboard.putString("Starting Position", robotPosition.toString());
-//		SmartDashboard.putString("Auton Mode", autonMode.toString());
-//		
-//		String gameData = DriverStation.getInstance().getGameSpecificMessage();
-//		SmartDashboard.putString("Game Data", gameData);
-//
-//		Auton.Position switchPosition = Auton.getPositionFromChar(gameData.charAt(0));
-//		Auton.Position scalePosition = Auton.getPositionFromChar(gameData.charAt(1));
-//		autonomous = new Auton(robotPosition, autonMode, switchPosition, scalePosition);
-//		autonomous.start();
-		
+	public void autonomousInit() {
 		Robot.drivetrain.setBrakeMode(true);
-		CommandGroup testAuton = new CommandGroup();
-		testAuton.addSequential(new TurnAnglePID(90));
-		testAuton.start();
+		Auton.Position robotPosition;
+		if(OI.leftJoystick.getRawAxis(3) > 0.33)
+			robotPosition = Auton.Position.RIGHT;
+		else if(OI.leftJoystick.getRawAxis(3) >= -0.33)
+			robotPosition = Auton.Position.CENTER;
+		else
+			robotPosition = Auton.Position.LEFT;
+		
+		
+		Auton.Mode autonMode = chooser.getSelected();
+		
+		SmartDashboard.putString("Starting Position", robotPosition.toString());
+		SmartDashboard.putString("Auton Mode", autonMode.toString());
+		
+		String gameData = DriverStation.getInstance().getGameSpecificMessage();
+		SmartDashboard.putString("Game Data", gameData);
+
+		Auton.Position switchPosition = Auton.getPositionFromChar(gameData.charAt(0));
+		Auton.Position scalePosition = Auton.getPositionFromChar(gameData.charAt(1));
+		autonomous = new Auton(robotPosition, autonMode, switchPosition, scalePosition);
+		autonomous.start();
+		
+//		CommandGroup testAuton = new CommandGroup();
+//		RobotMap.gyro.reset();
+//		testAuton.addSequential(new TurnAnglePID(-90));
+//		testAuton.addSequential(new ElevateIntakeToTime(-1, 0.2));
+//		testAuton.start();
 	}
 
 	/**
@@ -160,7 +163,7 @@ public class Robot extends TimedRobot {
 	}
 
 	@Override
-	public void teleopInit() {		
+	public void teleopInit() {
 		if(autonomous != null)
 			autonomous.cancel();
 		

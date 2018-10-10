@@ -29,7 +29,7 @@ public class TurnAnglePID extends PIDCommand {
 		getPIDController().setSetpoint(RobotMap.gyro.getAngle() + angle);
 
 		// TODO: Make it accurate enough so that we don't actually need timeout
-		setTimeout(angle * 1.5 / 90.0);
+		setTimeout(Math.abs(angle) * 1.5 / 90.0);
 		
 		System.out.println(getPIDController().getSetpoint());
 		System.out.println(RobotMap.gyro.getAngle());
@@ -58,7 +58,7 @@ public class TurnAnglePID extends PIDCommand {
 			passes++;
 			outputPositive = false;
 		}
-		Robot.drivetrain.arcadeDrive(0, -output);
+		Robot.drivetrain.arcadeDrive(0, output);
 	}
 
 	@Override

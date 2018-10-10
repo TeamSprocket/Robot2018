@@ -18,8 +18,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	// Controllers
-	public static Joystick leftJoystick = new Joystick(0);
-	public static Joystick rightJoystick = new Joystick(1);
+	public static Joystick leftJoystick = new Joystick(1);
+	public static Joystick rightJoystick = new Joystick(0);
 	public static XboxController gamepad = new XboxController(2);
 
 	// Buttons

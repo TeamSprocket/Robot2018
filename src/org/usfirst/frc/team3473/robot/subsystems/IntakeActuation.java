@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *	A subsystem for the acutation piston on the intake/outtake.
+ *	A subsystem for the actuation piston on the intake/outtake.
  */
 public class IntakeActuation extends Subsystem {
 	public boolean getToggled(){

@@ -33,7 +33,7 @@ public class ElevateIntakeToTime extends Command {
 	 */
 	public ElevateIntakeToTime(double elevatorSpeed, double time) {
 		requires(Robot.intakeElevator);
-		this.elevatorSpeed = elevatorSpeed;
+		this.elevatorSpeed = -elevatorSpeed;
 		setTimeout(time);
 	}
 
@@ -48,7 +48,8 @@ public class ElevateIntakeToTime extends Command {
 	// elevator will cause the encoder value to increase, while lowering the
 	// elevator will cause the encoder value to decrease.
 	protected boolean isFinished() {
-		return isTimedOut() || RobotMap.limitSwitch.get();
+		// return isTimedOut() || limitSwitch.get();
+		return isTimedOut();
 	}
 
 	protected void end() {

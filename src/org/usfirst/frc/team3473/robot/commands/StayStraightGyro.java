@@ -23,8 +23,8 @@ public class StayStraightGyro extends Command {
 		requires(Robot.drivetrain);
 		rightSpeed = speed;
 		leftSpeed = speed;
-//		targetDistance = Math.abs(distance);
-		setTimeout(distance);
+		targetDistance = Math.abs(distance);
+//		setTimeout(distance);
 	}
 
 	protected void initialize() {
@@ -38,30 +38,30 @@ public class StayStraightGyro extends Command {
 //		if(currentAngle > 180) {
 //			currentAngle = 360 - currentAngle;
 //		}
-		Robot.drivetrain.tankDrive(leftSpeed + kP * currentAngle, rightSpeed - kP * currentAngle);
+		Robot.drivetrain.tankDrive(leftSpeed - kP * currentAngle, rightSpeed + kP * currentAngle);
 	}
 
 	protected boolean isFinished() {
 		double leftDistance = RobotMap.leftEncoder.getDistance();
 		double rightDistance = RobotMap.rightEncoder.getDistance();
 		double robotDistance;
-//		if(MoveDistance.isLeftEncoderWorking() && MoveDistance.isRightEncoderWorking()) {
-//			robotDistance = Math.abs(leftDistance + rightDistance) / 2.0;
-//			if(leftDistance >= 500 && rightDistance <= 5.0) {
-//				MoveDistance.setRightEncoderWorking(false);
-//			}
-//			else if(rightDistance >= 500 && leftDistance <= 5.0) {
-//				MoveDistance.setLeftEncoderWorking(false);
-//			}
-//		}
-//		else if(!MoveDistance.isLeftEncoderWorking()) {
-//			robotDistance = Math.abs(rightDistance);
-//		}
-//		else {
-//			robotDistance = Math.abs(leftDistance);
-//		}
-//		return robotDistance >= Math.abs(targetDistance);
-		return isTimedOut();
+		if(MoveDistance.isLeftEncoderWorking() && MoveDistance.isRightEncoderWorking()) {
+			robotDistance = Math.abs(leftDistance + rightDistance) / 2.0;
+			if(leftDistance >= 500 && rightDistance <= 5.0) {
+				MoveDistance.setRightEncoderWorking(false);
+			}
+			else if(rightDistance >= 500 && leftDistance <= 5.0) {
+				MoveDistance.setLeftEncoderWorking(false);
+			}
+		}
+		else if(!MoveDistance.isLeftEncoderWorking()) {
+			robotDistance = Math.abs(rightDistance);
+		}
+		else {
+			robotDistance = Math.abs(leftDistance);
+		}
+		return robotDistance >= Math.abs(targetDistance);
+//		return isTimedOut();
 	}
 
 	protected void end() {

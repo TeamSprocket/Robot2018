@@ -21,7 +21,7 @@ public class MoveRollersAuto extends Command {
 	 */
 	public MoveRollersAuto(int direction) {
 		requires(Robot.intake);
-		this.direction = direction;
+		this.direction = -direction;
 	}
 	
 	/**
