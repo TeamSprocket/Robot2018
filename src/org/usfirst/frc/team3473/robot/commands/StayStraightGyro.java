@@ -26,7 +26,17 @@ public class StayStraightGyro extends Command {
 		targetDistance = Math.abs(distance);
 //		setTimeout(distance);
 	}
+	
+	@Override
+	public void start() {
 
+		RobotMap.gyro.reset();
+		RobotMap.leftEncoder.reset();
+		RobotMap.rightEncoder.reset();
+		
+		super.start();
+	}
+	
 	protected void initialize() {
 		RobotMap.gyro.reset();
 		RobotMap.leftEncoder.reset();
@@ -60,6 +70,7 @@ public class StayStraightGyro extends Command {
 		else {
 			robotDistance = Math.abs(leftDistance);
 		}
+		System.out.println(leftDistance + "\t" + rightDistance + "\t" + robotDistance);
 		return robotDistance >= Math.abs(targetDistance);
 //		return isTimedOut();
 	}

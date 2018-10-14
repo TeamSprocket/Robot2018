@@ -9,15 +9,12 @@ package org.usfirst.frc.team3473.robot;
 
 import org.usfirst.frc.team3473.robot.commands.ActuateIntake;
 import org.usfirst.frc.team3473.robot.commands.Auton;
+import org.usfirst.frc.team3473.robot.commands.Delay;
 import org.usfirst.frc.team3473.robot.commands.ElevateIntakeToTime;
 import org.usfirst.frc.team3473.robot.commands.GearToggle;
 import org.usfirst.frc.team3473.robot.commands.MoveRollers;
 import org.usfirst.frc.team3473.robot.commands.MoveRollersAuto;
-import org.usfirst.frc.team3473.robot.commands.MoveTime;
 import org.usfirst.frc.team3473.robot.commands.StayStraightGyro;
-import org.usfirst.frc.team3473.robot.commands.TurnAngle;
-import org.usfirst.frc.team3473.robot.commands.TurnAnglePID;
-import org.usfirst.frc.team3473.robot.commands.TurnAngleP;
 import org.usfirst.frc.team3473.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3473.robot.subsystems.GearPneumatics;
 import org.usfirst.frc.team3473.robot.subsystems.Intake;
@@ -84,9 +81,9 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putData("Gyro", RobotMap.gyro);
 		
-		SmartDashboard.putNumber("kP", 1.0);
-		SmartDashboard.putNumber("kI", 1.0);
-		SmartDashboard.putNumber("kD", 1.0);
+		SmartDashboard.putNumber("kP", 0.5);
+		SmartDashboard.putNumber("kI", 1.25);
+		SmartDashboard.putNumber("kD", 2.0);
 	
 		
 //		CameraServer cameraServer = CameraServer.getInstance();
@@ -148,8 +145,11 @@ public class Robot extends TimedRobot {
 		
 //		CommandGroup testAuton = new CommandGroup();
 //		RobotMap.gyro.reset();
-//		testAuton.addSequential(new TurnAnglePID(-90));
-//		testAuton.addSequential(new ElevateIntakeToTime(-1, 0.2));
+////		testAuton.addSequential(new ElevateIntakeToTime(0.85, 2.5));
+//		testAuton.addSequential(new StayStraightGyro(4900));//was 200
+////		testAuton.addSequential(new MoveRollersAuto(1, 0.75));
+////		testAuton.addSequential(new StayStraightGyro(-220));//was also 200
+////		testAuton.addSequential(new ElevateIntakeToTime(-0.65, 1.5));
 //		testAuton.start();
 	}
 

@@ -30,7 +30,9 @@ public class RobotMap {
 	// TODO: Refactor to remove
 	public static DoubleSolenoid gearPneumatics = new DoubleSolenoid(4, 5);
 
-	// Intake
+	// Intake\\
+	
+	
 	public static WPI_TalonSRX intakeLeft = new WPI_TalonSRX(5);
 	public static WPI_TalonSRX intakeRight = new WPI_TalonSRX(6);
 	public static DoubleSolenoid actuationPiston = new DoubleSolenoid(0, 1);

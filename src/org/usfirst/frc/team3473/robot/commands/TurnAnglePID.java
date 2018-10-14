@@ -15,33 +15,32 @@ public class TurnAnglePID extends PIDCommand {
 
 	// TODO: Tweak kP, kI, and kD values instead of counting passes
 	private static double kP = 1.0, kI = 1.0, kD = 1.0;
-	private static final int MINIMUM_PASSES = 5;
-
+	private static final int MAXIMUM_PASSES = 5;
+	private static final double PASS_TIME = 150;
+	
 	private boolean outputPositive = true;
 	private double passes;
+	private double lastPassTimestamp = 0;
+	private boolean finished = false;
 
+	private double targetAngle;
+	
 	public TurnAnglePID(double angle) {
-		super(kP, kI, kD);
+		super(SmartDashboard.getNumber("kP", 0.5), SmartDashboard.getNumber("kI", 1.25), SmartDashboard.getNumber("kD", 2.0));
 
 		requires(Robot.drivetrain);
 
 		passes = 0;
-		getPIDController().setSetpoint(RobotMap.gyro.getAngle() + angle);
+		targetAngle = angle;
 
 		// TODO: Make it accurate enough so that we don't actually need timeout
 		setTimeout(Math.abs(angle) * 1.5 / 90.0);
-		
-		System.out.println(getPIDController().getSetpoint());
-		System.out.println(RobotMap.gyro.getAngle());
 	}
 
 	@Override
 	protected void initialize() {
+		getPIDController().setSetpoint(RobotMap.gyro.getAngle() + targetAngle);
 		getPIDController().enable();
-		
-		kP = SmartDashboard.getNumber("kP", 1.0);
-		kI = SmartDashboard.getNumber("kI", 1.0);
-		kD = SmartDashboard.getNumber("kD", 1.0);
 	}
 
 	@Override
@@ -52,11 +51,19 @@ public class TurnAnglePID extends PIDCommand {
 	@Override
 	protected void usePIDOutput(double output) {
 		if(output > 0 && !outputPositive) {
+			if(System.currentTimeMillis() - lastPassTimestamp < PASS_TIME)
+				finished = true;
+			
 			passes++;
 			outputPositive = true;
+			lastPassTimestamp = System.currentTimeMillis();
 		} else if(output < 0 && outputPositive) {
+			if(System.currentTimeMillis() - lastPassTimestamp < PASS_TIME)
+				finished = true;
+			
 			passes++;
 			outputPositive = false;
+			lastPassTimestamp = System.currentTimeMillis();
 		}
 		Robot.drivetrain.arcadeDrive(0, output);
 	}
@@ -64,9 +71,13 @@ public class TurnAnglePID extends PIDCommand {
 	@Override
 	protected boolean isFinished() {
 		// TODO: Maybe use RobotMap.gyro.getRate() to check instead?
-		return passes > MINIMUM_PASSES
-				&& Math.abs(getPIDController().getSetpoint()
-						- RobotMap.gyro.getAngle()) < ANGLE_TOLERANCE;
+//		return passes > MINIMUM_PASSES
+//				&& Math.abs(getPIDController().getSetpoint()
+//						- RobotMap.gyro.getAngle()) < ANGLE_TOLERANCE;
+		return finished || Math.abs(RobotMap.gyro.getRate()) < 1 &&
+				Math.abs(getPIDController().getSetpoint() -
+				RobotMap.gyro.getAngle()) < ANGLE_TOLERANCE ||
+				passes >= MAXIMUM_PASSES;
 	}
 
 	@Override
