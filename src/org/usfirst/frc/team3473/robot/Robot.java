@@ -145,11 +145,11 @@ public class Robot extends TimedRobot {
 		
 //		CommandGroup testAuton = new CommandGroup();
 //		RobotMap.gyro.reset();
-////		testAuton.addSequential(new ElevateIntakeToTime(0.85, 2.5));
-//		testAuton.addSequential(new StayStraightGyro(4900));//was 200
-////		testAuton.addSequential(new MoveRollersAuto(1, 0.75));
-////		testAuton.addSequential(new StayStraightGyro(-220));//was also 200
-////		testAuton.addSequential(new ElevateIntakeToTime(-0.65, 1.5));
+//		testAuton.addSequential(new ElevateIntakeToTime(0.85, 2.5));
+//		testAuton.addSequential(new ElevateIntakeToTime(0.9,1)); //was 200
+//		testAuton.addSequential(new MoveRollersAuto(1, 0.75));
+//		testAuton.addSequential(new StayStraightGyro(-220)); //was also 200
+//		testAuton.addSequential(new ElevateIntakeToTime(-0.65, 1.5));
 //		testAuton.start();
 	}
 

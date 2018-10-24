@@ -176,7 +176,7 @@ public class Auton extends CommandGroup {
 			addSequential(new StayStraightGyro(700));
 			addSequential(new TurnAnglePID(90));
 			addSequential(new StayStraightGyro(530));
-			addSequential(new ElevateIntakeToTime(0.9, 1.2));
+			addSequential(new ElevateIntakeToTime(0.9, 1.1));
 			addSequential(new MoveRollersAuto(1, 0.75));
 			addSequential(new StayStraightGyro(90));
 		}
@@ -185,7 +185,7 @@ public class Auton extends CommandGroup {
 			addSequential(new StayStraightGyro(700));
 			addSequential(new TurnAnglePID(-90));
 			addSequential(new StayStraightGyro(530));
-			addSequential(new ElevateIntakeToTime(0.9, 1.2));
+			addSequential(new ElevateIntakeToTime(0.9, 1.1));
 			addSequential(new MoveRollersAuto(1, 0.75));
 			addSequential(new StayStraightGyro(90));
 		}
@@ -201,14 +201,14 @@ public class Auton extends CommandGroup {
 		else if(switchPosition == Position.RIGHT)
 			addSequential(new TurnAnglePID(-90));
 		addSequential(new StayStraightGyro(200));
-		addSequential(new ElevateIntakeToTime(0.9, 1.2));
+		addSequential(new ElevateIntakeToTime(0.9, 1.1));
 		addSequential(new MoveRollersAuto(1, 0.75));
 	}
 	
 	// Move forward, turn 90 degrees, lift elevator to scale, drop cube
 	private void scaleFromSide(Position scalePosition) {
 //		addSequential(new ActuateIntake());
-		addSequential(new StayStraightGyro(5400));
+		addSequential(new StayStraightGyro(1, 4700));
 		addSequential(new Delay(0.1));
 		if(scalePosition == Position.LEFT) {
 			addSequential(new TurnAnglePID(90));
@@ -219,9 +219,9 @@ public class Auton extends CommandGroup {
 			addSequential(new StayStraightGyro(-140));
 		}
 		addSequential(new ElevateIntakeToTime(0.85, 2.5));
-		addSequential(new StayStraightGyro(270));//was 200
+		addSequential(new StayStraightGyro(300));//was 200
 		addSequential(new MoveRollersAuto(1, 0.75));
-		addSequential(new StayStraightGyro(-220));//was also 200
+		addSequential(new StayStraightGyro(-300));//was also 200
 		addSequential(new ElevateIntakeToTime(-0.65, 1.5));
 	}
 	
