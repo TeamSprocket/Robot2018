@@ -7,6 +7,9 @@
 
 package org.usfirst.frc.team3473.robot;
 
+import org.usfirst.frc.team3473.util.FB;
+import org.usfirst.frc.team3473.util.LR;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -21,12 +24,25 @@ import edu.wpi.first.wpilibj.Encoder;
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  */
-public class RobotMap {
-	// Drivetrain
-	public static WPI_TalonSRX frontLeft = new WPI_TalonSRX(1);
-	public static WPI_TalonSRX backLeft = new WPI_TalonSRX(2);
-	public static WPI_TalonSRX frontRight = new WPI_TalonSRX(3);
-	public static WPI_TalonSRX backRight = new WPI_TalonSRX(4);
+public final class RobotMap {
+	private static final int frontLeftTalon = 1;
+	private static final int backLeftTalon = 2;
+	private static final int frontRightTalon = 3;
+	private static final int backRightTalon = 4;
+	
+	public static int getTalon(FB fb, LR lr) {
+		if(fb == FB.FRONT)
+			if(lr == LR.LEFT)
+				return frontLeftTalon;
+			else
+				return frontRightTalon;
+		else
+			if(lr == LR.LEFT)
+				return backLeftTalon;
+			else
+				return backRightTalon;
+	}
+
 	// TODO: Refactor to remove
 	public static DoubleSolenoid gearPneumatics = new DoubleSolenoid(4, 5);
 
@@ -48,14 +64,4 @@ public class RobotMap {
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 //	public static AnalogGyro gyro = new AnalogGyro(0);
 	public static DigitalInput limitSwitch = new DigitalInput(6);
-	
-	// This subclass reverses the direction of a gyro
-	private static class InvertedGyro extends ADXRS450_Gyro {
-		public double getRate() {
-			return -super.getRate();
-		}
-		public double getAngle() {
-			return -super.getAngle();
-		}
-	}
 }

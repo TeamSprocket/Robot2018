@@ -7,19 +7,19 @@
 
 package org.usfirst.frc.team3473.robot;
 
-import org.usfirst.frc.team3473.robot.commands.ActuateIntake;
-import org.usfirst.frc.team3473.robot.commands.Auton;
-import org.usfirst.frc.team3473.robot.commands.Delay;
-import org.usfirst.frc.team3473.robot.commands.ElevateIntakeToTime;
-import org.usfirst.frc.team3473.robot.commands.GearToggle;
-import org.usfirst.frc.team3473.robot.commands.MoveRollers;
-import org.usfirst.frc.team3473.robot.commands.MoveRollersAuto;
-import org.usfirst.frc.team3473.robot.commands.StayStraightGyro;
-import org.usfirst.frc.team3473.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team3473.robot.subsystems.GearPneumatics;
-import org.usfirst.frc.team3473.robot.subsystems.Intake;
-import org.usfirst.frc.team3473.robot.subsystems.IntakeActuation;
-import org.usfirst.frc.team3473.robot.subsystems.IntakeElevator;
+import org.usfirst.frc.team3473.robot.command.auton.Delay;
+import org.usfirst.frc.team3473.robot.command.auton.ElevateIntakeToTime;
+import org.usfirst.frc.team3473.robot.command.auton.MoveRollersAuto;
+import org.usfirst.frc.team3473.robot.command.auton.StayStraightGyro;
+import org.usfirst.frc.team3473.robot.command.auton.routine.Auton;
+import org.usfirst.frc.team3473.robot.command.instant.ActuateIntake;
+import org.usfirst.frc.team3473.robot.command.instant.GearToggle;
+import org.usfirst.frc.team3473.robot.command.teleop.MoveRollers;
+import org.usfirst.frc.team3473.robot.subsystem.Drivetrain;
+import org.usfirst.frc.team3473.robot.subsystem.GearPneumatics;
+import org.usfirst.frc.team3473.robot.subsystem.Intake;
+import org.usfirst.frc.team3473.robot.subsystem.IntakeActuation;
+import org.usfirst.frc.team3473.robot.subsystem.IntakeElevator;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -38,7 +38,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
 	
-	public static Drivetrain drivetrain = new Drivetrain();
+	public static Drivetrain drivetrain = Drivetrain.getInstance();
 	public static Intake intake = new Intake();
 	public static IntakeElevator intakeElevator = new IntakeElevator();
 	public static IntakeActuation intakeActuation = new IntakeActuation();
