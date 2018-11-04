@@ -5,16 +5,17 @@ import org.usfirst.frc.team3473.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * An instantaneous command that toggles the actuation piston
+ * An instantaneous command that toggles the drivetrain gear
  */
-public class ActuateIntake extends Command {
-	public ActuateIntake() {
-		requires(Robot.actuator);
+@Deprecated
+public class ToggleGear extends Command {
+	public ToggleGear() {
+		requires(Robot.gearPneumatics);
 	}
 
 	@Override
 	protected void initialize() {
-		Robot.actuator.toggle();
+		Robot.gearPneumatics.toggle();
 	}
 
 	@Override

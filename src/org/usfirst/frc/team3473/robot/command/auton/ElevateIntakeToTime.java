@@ -32,7 +32,7 @@ public class ElevateIntakeToTime extends Command {
 	 * @param target The encoder value at which this command should stop.
 	 */
 	public ElevateIntakeToTime(double elevatorSpeed, double time) {
-		requires(Robot.intakeElevator);
+		requires(Robot.elevator);
 		this.elevatorSpeed = -elevatorSpeed;
 		setTimeout(time);
 	}
@@ -41,7 +41,7 @@ public class ElevateIntakeToTime extends Command {
 	}
 
 	protected void execute() {
-		Robot.intakeElevator.moveElevator(elevatorSpeed);
+		Robot.elevator.moveElevator(elevatorSpeed);
 	}
 
 	// This method assumes that the encoder is positioned such that raising the
@@ -53,7 +53,7 @@ public class ElevateIntakeToTime extends Command {
 	}
 
 	protected void end() {
-		Robot.intakeElevator.moveElevator(0.0);
+		Robot.elevator.moveElevator(0.0);
 	}
 
 	protected void interrupted() {

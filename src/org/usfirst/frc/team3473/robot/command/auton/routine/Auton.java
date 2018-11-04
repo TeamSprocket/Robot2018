@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+// TODO: Refactor logic into AutonRoutine and AutonRoutineFactory
+
 /**
  *	CommandGroup for autonomous robot control.
  */
@@ -256,18 +258,5 @@ public class Auton extends CommandGroup {
 		addSequential(new MoveRollersAuto(1, 0.75));
 		addSequential(new StayStraightGyro(-220));//was also 200
 		addSequential(new ElevateIntakeToTime(-0.65, 1.5));
-	}
-	
-	/**
-	 * Converts a character from the game data into the corresponding Position.
-	 * @param letter the letter ('L' or 'R')
-	 * @return the corresponding Position (or null if letter is invalid)
-	 */
-	public static Position getPositionFromChar(char letter) {
-		if(letter == 'L')
-			return Position.LEFT;
-		else if(letter == 'R')
-			return Position.RIGHT;
-		return null;
 	}
 }

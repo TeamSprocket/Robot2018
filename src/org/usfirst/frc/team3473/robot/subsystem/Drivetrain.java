@@ -1,13 +1,17 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
 package org.usfirst.frc.team3473.robot.subsystem;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.usfirst.frc.team3473.robot.RobotMap;
 import org.usfirst.frc.team3473.robot.command.teleop.Drive;
-import org.usfirst.frc.team3473.util.FB;
-import org.usfirst.frc.team3473.util.LR;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -15,54 +19,33 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * A subsystem that represents the robot's drivetrain.
+ * A subsystem that represents the robot's drivetrain. This subsystem is a
+ * singleton, which means the only instance of it is instantiated statically
+ * when the class is loaded.
  */
-public class Drivetrain extends Subsystem {
-	/**
-	 * The singleton instance of the Drivetrain
-	 */
-	private static final Drivetrain instance = new Drivetrain();
-	
-	/**
-	 * Get the singleton instance of the Drivetrain
-	 * @return The singleton Drivetrain instance
-	 */
-	public static Drivetrain getInstance() {
-		return instance;
-	}
-	
-	/**
-	 * Private constructor to prohibit public instantiation
-	 */
-	private Drivetrain() {
-	}
-	
-	// Individual talon fields
+public class Drivetrain extends Subsystem implements Testable {
 	private final WPI_TalonSRX frontLeftTalon = new WPI_TalonSRX(
-			RobotMap.getTalon(FB.FRONT, LR.LEFT));
+			RobotMap.Drivetrain.FRONT_LEFT_TALON);
 	private final WPI_TalonSRX frontRightTalon = new WPI_TalonSRX(
-			RobotMap.getTalon(FB.FRONT, LR.RIGHT));
+			RobotMap.Drivetrain.FRONT_RIGHT_TALON);
 	private final WPI_TalonSRX backLeftTalon = new WPI_TalonSRX(
-			RobotMap.getTalon(FB.BACK, LR.LEFT));
+			RobotMap.Drivetrain.BACK_LEFT_TALON);
 	private final WPI_TalonSRX backRightTalon = new WPI_TalonSRX(
-			RobotMap.getTalon(FB.BACK, LR.RIGHT));
-	
-	// A List of talons for performing batch operations
-	private final List<WPI_TalonSRX> talons = new ArrayList<>(Arrays.asList(
-			frontLeftTalon, frontRightTalon, backLeftTalon, backRightTalon));
+			RobotMap.Drivetrain.BACK_RIGHT_TALON);
 
-	// Side speed setting methods
-	public void setLeft(double speed) {
+	private final List<WPI_TalonSRX> talons = Arrays.asList(frontLeftTalon,
+			frontRightTalon, backLeftTalon, backRightTalon);
+
+	private void setLeft(double speed) {
 		frontLeftTalon.set(speed);
 		backLeftTalon.set(speed);
 	}
 
-	public void setRight(double speed) {
+	private void setRight(double speed) {
 		frontRightTalon.set(-speed);
 		backRightTalon.set(-speed);
 	}
 
-	// Drive methods
 	public void tankDrive(double left, double right) {
 		setLeft(left);
 		setRight(right);
@@ -73,7 +56,11 @@ public class Drivetrain extends Subsystem {
 		setRight(speed - turn);
 	}
 
-	// Brake mode configuration
+	public void stop() {
+		setLeft(0);
+		setRight(0);
+	}
+	
 	public void setBrakeMode(boolean brake) {
 		if(brake)
 			talons.forEach(t -> t.setNeutralMode(NeutralMode.Brake));
@@ -81,9 +68,23 @@ public class Drivetrain extends Subsystem {
 			talons.forEach(t -> t.setNeutralMode(NeutralMode.Coast));
 	}
 
-	// Initialize default command
+	@Override
+	public void test() {
+		// TODO: Implement
+	}
+
 	@Override
 	public void initDefaultCommand() {
 		setDefaultCommand(new Drive());
+	}
+
+	// Singleton instance, getter, and constructor
+	private static final Drivetrain instance = new Drivetrain();
+
+	public static Drivetrain getInstance() {
+		return instance;
+	}
+
+	private Drivetrain() {
 	}
 }

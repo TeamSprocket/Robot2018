@@ -7,24 +7,19 @@
 
 package org.usfirst.frc.team3473.robot;
 
-import org.usfirst.frc.team3473.robot.command.auton.Delay;
-import org.usfirst.frc.team3473.robot.command.auton.ElevateIntakeToTime;
-import org.usfirst.frc.team3473.robot.command.auton.MoveRollersAuto;
-import org.usfirst.frc.team3473.robot.command.auton.StayStraightGyro;
 import org.usfirst.frc.team3473.robot.command.auton.routine.Auton;
 import org.usfirst.frc.team3473.robot.command.instant.ActuateIntake;
-import org.usfirst.frc.team3473.robot.command.instant.GearToggle;
+import org.usfirst.frc.team3473.robot.command.instant.ToggleGear;
 import org.usfirst.frc.team3473.robot.command.teleop.MoveRollers;
+import org.usfirst.frc.team3473.robot.subsystem.Actuator;
 import org.usfirst.frc.team3473.robot.subsystem.Drivetrain;
+import org.usfirst.frc.team3473.robot.subsystem.Elevator;
 import org.usfirst.frc.team3473.robot.subsystem.GearPneumatics;
 import org.usfirst.frc.team3473.robot.subsystem.Intake;
-import org.usfirst.frc.team3473.robot.subsystem.IntakeActuation;
-import org.usfirst.frc.team3473.robot.subsystem.IntakeElevator;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,13 +32,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-	
+
+	// TODO: Fix everything lol
 	public static Drivetrain drivetrain = Drivetrain.getInstance();
-	public static Intake intake = new Intake();
-	public static IntakeElevator intakeElevator = new IntakeElevator();
-	public static IntakeActuation intakeActuation = new IntakeActuation();
-	public static GearPneumatics gearPneumatics = new GearPneumatics();
-	
+	public static Intake intake = Intake.getInstance();
+	public static Elevator elevator = Elevator.getInstance();
+	public static Actuator actuator = Actuator.getInstance();
+	public static GearPneumatics gearPneumatics = GearPneumatics.getInstance();
+
 	public static MoveRollers moveRollers = new MoveRollers();
 
 	private Command autonomous;
@@ -62,12 +58,12 @@ public class Robot extends TimedRobot {
 		RobotMap.intakeElevatorEncoder.reset();
 		intake.setBrakeMode(true);
 //		intakeElevator.setBrakeMode(true);
-		
+
 		positionChooser = new SendableChooser<>();
 		positionChooser.addObject("Left", Auton.Position.LEFT);
 		positionChooser.addObject("Center", Auton.Position.CENTER);
 		positionChooser.addObject("Right", Auton.Position.RIGHT);
-		
+
 		chooser = new SendableChooser<>();
 		chooser.addObject("Baseline only", Auton.Mode.BASELINE);
 		chooser.addObject("Move forward switch", Auton.Mode.SWITCH_ONLY);
@@ -80,12 +76,11 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Auto Mode", chooser);
 
 		SmartDashboard.putData("Gyro", RobotMap.gyro);
-		
+
 		SmartDashboard.putNumber("kP", 0.5);
 		SmartDashboard.putNumber("kI", 1.25);
 		SmartDashboard.putNumber("kD", 2.0);
-	
-		
+
 //		CameraServer cameraServer = CameraServer.getInstance();
 //		AxisCamera camera = cameraServer.addAxisCamera("10.34.73.67");
 //		cameraServer.startAutomaticCapture(camera);
@@ -107,6 +102,8 @@ public class Robot extends TimedRobot {
 		updateDashboardValues();
 	}
 
+	// TODO: Fix everything lol
+
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
 	 * between different autonomous modes using the dashboard. The sendable
@@ -114,7 +111,8 @@ public class Robot extends TimedRobot {
 	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
 	 * getString code to get the auto name from the text box below the Gyro
 	 *
-	 * <p>You can add additional auto modes by adding additional commands to the
+	 * <p>
+	 * You can add additional auto modes by adding additional commands to the
 	 * chooser code above (like the commented example) or additional comparisons
 	 * to the switch structure below with additional strings & commands.
 	 */
@@ -128,21 +126,20 @@ public class Robot extends TimedRobot {
 			robotPosition = Auton.Position.CENTER;
 		else
 			robotPosition = Auton.Position.LEFT;
-		
-		
+
 		Auton.Mode autonMode = chooser.getSelected();
-		
+
 		SmartDashboard.putString("Starting Position", robotPosition.toString());
 		SmartDashboard.putString("Auton Mode", autonMode.toString());
-		
+
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		SmartDashboard.putString("Game Data", gameData);
 
-		Auton.Position switchPosition = Auton.getPositionFromChar(gameData.charAt(0));
-		Auton.Position scalePosition = Auton.getPositionFromChar(gameData.charAt(1));
-		autonomous = new Auton(robotPosition, autonMode, switchPosition, scalePosition);
+//		Auton.Position switchPosition = Auton.getPositionFromChar(gameData.charAt(0));
+//		Auton.Position scalePosition = Auton.getPositionFromChar(gameData.charAt(1));
+//		autonomous = new Auton(robotPosition, autonMode, switchPosition, scalePosition);
 		autonomous.start();
-		
+
 //		CommandGroup testAuton = new CommandGroup();
 //		RobotMap.gyro.reset();
 //		testAuton.addSequential(new ElevateIntakeToTime(0.85, 2.5));
@@ -166,14 +163,14 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		if(autonomous != null)
 			autonomous.cancel();
-		
+
 		RobotMap.intakeElevatorEncoder.reset();
 		RobotMap.leftEncoder.reset();
 		RobotMap.rightEncoder.reset();
 		RobotMap.gyro.reset();
 
 		Robot.drivetrain.setBrakeMode(false);
-		
+
 		moveRollers.start();
 //		OI.intakeButton.whenPressed(new MoveRollers(1));
 //		OI.intakeButton.whenReleased(new MoveRollers(0));
@@ -181,8 +178,8 @@ public class Robot extends TimedRobot {
 //		OI.outtakeButton.whenReleased(new MoveRollers(0));
 		OI.actuateButton.whenPressed(new ActuateIntake());
 //		OI.ratchetWrenchToggle.whenPressed(new WrenchToggle());
-		OI.changeGearButton.whenPressed(new GearToggle());
-		
+		OI.changeGearButton.whenPressed(new ToggleGear());
+
 		RobotMap.gyro.reset();
 	}
 
@@ -209,9 +206,12 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Right Joystick Y", OI.rightJoystick.getY());
 		SmartDashboard.putBoolean("Gear Shifted", gearPneumatics.getToggled());
 		SmartDashboard.putNumber("Gyro Angle", RobotMap.gyro.getAngle());
-		SmartDashboard.putNumber("Left Encoder", RobotMap.leftEncoder.getDistance());
-		SmartDashboard.putNumber("Right Encoder", RobotMap.rightEncoder.getDistance());
-		SmartDashboard.putNumber("Elevator Encoder", RobotMap.intakeElevatorEncoder.getDistance());
+		SmartDashboard.putNumber("Left Encoder",
+				RobotMap.leftEncoder.getDistance());
+		SmartDashboard.putNumber("Right Encoder",
+				RobotMap.rightEncoder.getDistance());
+		SmartDashboard.putNumber("Elevator Encoder",
+				RobotMap.intakeElevatorEncoder.getDistance());
 		SmartDashboard.putBoolean("Limit Switch", RobotMap.limitSwitch.get());
 	}
 }

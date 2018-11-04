@@ -35,7 +35,7 @@ public class ElevateIntakeToHeight extends Command {
 	 * @param target The encoder value at which this command should stop.
 	 */
 	public ElevateIntakeToHeight(double elevatorSpeed, double target) {
-		requires(Robot.intakeElevator);
+		requires(Robot.elevator);
 		this.elevatorSpeed = elevatorSpeed;
 		position = target;
 		setTimeout(TIME);
@@ -43,7 +43,6 @@ public class ElevateIntakeToHeight extends Command {
 
 	@Override
 	protected void initialize() {
-		Robot.intakeElevator.initializeCounter();
 		startingTime = System.currentTimeMillis();
 		if(RobotMap.intakeElevatorEncoder.getDistance() < position) {
 			elevatorSpeed = Math.abs(elevatorSpeed);
@@ -55,7 +54,7 @@ public class ElevateIntakeToHeight extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.intakeElevator.moveElevator(elevatorSpeed);
+		Robot.elevator.moveElevator(elevatorSpeed);
 	}
 
 	// This method assumes that the encoder is positioned such that raising the
@@ -63,7 +62,7 @@ public class ElevateIntakeToHeight extends Command {
 	// elevator will cause the encoder value to decrease.
 	@Override
 	protected boolean isFinished() {
-		if(elevatorSpeed > 0.0 && (Robot.intakeElevator.isSwitchSet() || RobotMap.intakeElevatorEncoder.getDistance() > position)) {
+		if(elevatorSpeed > 0.0 && (RobotMap.intakeElevatorEncoder.getDistance() > position)) {
 			return true;
 		}
 		else if(elevatorSpeed < 0.0 && RobotMap.intakeElevatorEncoder.getDistance() < position) {
@@ -74,7 +73,7 @@ public class ElevateIntakeToHeight extends Command {
 
 	@Override
 	protected void end() {
-		Robot.intakeElevator.moveElevator(0.0);
+		Robot.elevator.moveElevator(0.0);
 		System.out.println(System.currentTimeMillis() - startingTime);
 	}
 
